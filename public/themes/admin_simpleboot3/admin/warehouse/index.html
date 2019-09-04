@@ -1,0 +1,60 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('warehouse/index')}">仓库列表</a></li>
+        <li><a href="{:url('warehouse/add')}">添加仓库信息</a></li>
+    </ul>
+    <form method="post" class="js-ajax-form margin-top-20" action="{:url('Warehouse/listOrder')}">
+        <div class="table-actions">
+            <button class="btn btn-sm btn-primary js-ajax-submit" type="submit">{:lang('SORT')}</button>
+            
+        </div>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+                <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x"
+                                             data-checklist="js-check-x"></label></th>
+                <th width="50">{:lang('SORT')}</th>
+                <th width="50">ID</th>
+                <th>仓库名称</th>
+                <th>仓库编号</th>
+                <th>负责人</th>
+                <th>备注</th>
+                <th width="120">{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="links" item="vo">
+                <tr>
+                    <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                               value="{$vo.id}"></td>
+                    <td><input name='list_orders[{$vo.id}]' class="input input-order mr5" type='text' size='3'
+                               value='{$vo.list_order}'></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.wh_name}</td>
+                    <td>{$vo.wh_code}</td>
+                    <td>{$vo.wh_fzr}</td>
+                    <td>
+                      {$vo.remarks}
+                    </td>
+                    <td>
+                        <a class="btn btn-xs btn-primary" href="{:url('Warehouse/edit',array('id'=>$vo['id']))}">{:lang('EDIT')}</a>
+                        <a class="btn btn-xs btn-danger  js-ajax-delete" href="{:url('Warehouse/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">
+                            {:lang('DELETE')}
+                        </a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="table-actions">
+            <button class="btn btn-sm btn-primary js-ajax-submit" type="submit">{:lang('SORT')}</button>
+            
+        </div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

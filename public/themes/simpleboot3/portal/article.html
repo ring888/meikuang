@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{$article.post_title}</title>
+    <meta name="keywords" content="{$site_info.site_seo_keywords|default=''}"/>
+    <meta name="description" content="{$site_info.site_seo_description|default=''}">
+    <include file="public@head"/>
+    <style>
+
+        .content{ width:1100px; margin:0 auto; background:#fff;}
+        .padd{ padding:0 36px 60px 36px;}
+
+    /*面包屑开始*/
+    .BreadcrumbNav{ line-height:44px; height:44px; font-size:12px;font-family:"宋体"; color:#000;}
+    .BreadcrumbNav a{ color:#000;}
+
+    /*栏目标题 带下划线 字体22px*/
+    .channel_tab{  border-bottom:1px #bababa solid; padding-bottom:2px; padding-left:5px;}
+    .channel_tab span{ padding:0 15px; background:url(../images/zl/line.jpg) no-repeat right;}
+    .channel_tab span.noline{ background:none}
+    .channel_tab span{ font-family:"微软雅黑","宋体"; font-size:22px;}
+    .channel_tab span a{ font-family:"微软雅黑","宋体"; font-size:22px;}
+
+    /*有下划线的栏目标题*/
+    .lmtit{font-family:"FZZHUNYSK","微软雅黑","宋体"; font-size:22px; border-bottom:1px solid #bababa;}
+    .lmtit a{color:#000000;}
+    .lmtit a:hover{color:#025291;}
+
+    /*下划线大标题+带“丨”隔开的小标题*/
+    .lmtit span{ padding:0 11px;}
+    .lmtit .span1{ padding-left:16px;}
+    .lmtit span a{ font-size:14px;color:#888; font-weight:normal;font-family: "微软雅黑","宋体";}
+    .lmtit i{ font-style:normal;font-size:12px; color:#888}
+
+    /*统一1px的边框*/
+    .pub_border{ border:1px #dddddd solid;}
+
+    /*列表效果  标题  时间  摘要*/
+    .list ul li{padding:18px 0; overflow:hidden; border-bottom:1px #dddddd solid;}
+    .list ul li h4{ padding-bottom:15px;}
+    .list ul li h4 a {font-size: 17px;color: #000;font-family: "微软雅黑","宋体";font-weight: normal;}
+    .list ul li h4 span {color: #888888;font-weight: normal;font-size: 14px;}
+    .list ul li h4 span.date{ padding-left:14px;}
+    .list ul li p{ margin:0; padding:0; line-height:22px; color:#666}
+    .list ul li p a{ color:#666666; font-size:12px;}
+
+    /*列表效果  地点  标题  时间*/
+    div.list_1 ul{padding:15px 0 0 0;}
+    div.list_1 ul li{ padding:0; line-height:35px; border-bottom:none;}
+    div.list_1 ul li h4{ padding-bottom:0;}
+    div.list_1 ul li h4 span.place{ font-family:微软雅黑; padding-left:0; color:#888888; font-size:17px;}
+    div.list_1 ul li h4 span.date{font-family:宋体; color:#888888;}
+
+    /*列表效果 d带 . 标题  时间*/
+    div.list_2 ul li h4 a{ background:url(../images/public/point.jpg) no-repeat left center; padding-left:11px;}
+    
+.related{border-bottom:1px #dddddd solid; border-top:1px #dddddd solid; margin:43px 0px 0px 0px; padding:15px 0px;}
+.related ul li a{ color:#00558e; font-size:16px; }
+.pos{ position:relative; height:248px;}
+.oneColumn .de_bannerS{ margin:0px; margin-top:15px;}
+.oneColumn {padding: 10px 66px 38px 66px;}
+.jdxj{ position:absolute; top:15px; right:0px; width:375px;height:248px;}
+.jdxj .title ul{ display:block; height:43px;}
+.jdxj .title ul li{ float:left; font-size:18px;color: #00558e;font-family: "微软雅黑", "宋体"; margin:0 4px;}
+.jdxj .title ul li a{color: #00558e;}
+.pages-date{ position:relative;border-bottom: 1px #dcdcdc solid;padding-top: 7px; text-align:left}
+.pages_print{position:absolute; border-bottom:none;top:7px;right:-12px;}
+.editor{ padding-bottom:30px;}
+
+
+#pageBreak{margin: 0 auto 35px auto;}
+/*结构*/
+body{ color:#333; font-family: "宋体";}
+.rightPart{ font-family:"微软雅黑", "宋体";}
+.list01{margin:0;padding:0;}
+.list01 li{background:url("../images/public/Point.jpg") no-repeat 0px 14px;margin:0;padding:3px 0 3px 12px;line-height:26px; font-size:14px;list-style:none;}
+.list01 li a:hover{ text-decoration:underline;}
+.list01 li .datetime{float:right;color:#999999;}
+.container{ padding-top:13px;}
+.box{ margin-bottom:30px;}
+
+
+/*标题部分*/
+h1{ line-height:56px; font-family:"微软雅黑", "宋体"; font-size:38px; text-align:center; padding:26px 0 26px 0; font-weight:normal;}
+.pages-date{text-align:center;color:#666666;font-size:14px;height:35px;overflow:hidden;}
+.pages-date span.font,.pages_print span.font{margin:0 10px;}
+
+.pages_print{ padding-bottom:11px}
+.pages_print .index_switchsize{float:left;padding-left:180px;}
+.pages_print .printIco{float:left; background:url(__TMPL__/public/assets/images/ico.png) no-repeat 0px 0px; padding-left:22px;}
+.pages_print .share{float:left;padding-left:20px;width:auto;margin:0;}
+.pages_print .index_switchsize span{cursor:pointer;}
+.pages_print{text-align:center;font-size:14px;height:30px;border-bottom:1px #dcdcdc solid;}
+.pages_print .share{color:#898989;}
+#btnPrint{cursor:pointer;}
+
+/*正文*/
+.pages_content{line-height:30px;margin:0;padding:40px 0 40px 0;font-size:16px;}
+.pages_content p{ margin-top:15px;}
+.pages_content .list01 li a p{ margin-top:0px;	font-family:Microsoft Yahei;}
+.pages_content .editor{color:#898989;font-size:12px;text-align:right;padding:5px 0;}
+.editor{ text-align:right; color:#888888; font-size:14px;}
+
+/*相关*/
+.keyWord{ margin-top:50px}
+.de_bannerS{position:relative; height:103px; padding:10px 20px; margin:38px 0; border:1px #dddddd solid;}
+.de_bannerS a{ position:absolute; width:71px; height:70px; top:28px; background:url(../images/public/ico1.jpg) no-repeat;}
+.de_bannerS a.bannerA1{ background-position:0px 0px;right:20px;}
+.de_bannerS a.bannerA2{ background-position:0px -72px;right:106px;}
+
+.xg-list{ padding-bottom:15px;}
+.xg-list .pannel-title{margin:0;color:#00558e;line-height:33px;font-size:18px; font-family:"微软雅黑", "宋体";}
+
+
+/*图文*/
+
+.newPicture{width:713px;overflow:hidden; }
+.newPicture .con{position:relative; width:732px;left:-7px;}
+.newPicture dl{ float:left; width:230px; margin:0 6px; background:#dfdfdf; z-index:1;}
+.newPicture dl a{ display:block;}
+.newPicture dl dt{ height:134px;}
+.newPicture dl dd{ font-size:13px; line-height:19px; padding:12px;}
+
+/*热词*/
+.hotKey .con{ padding:8px 0;}
+.hotKey a{	display:inline-block; margin-right:31px; line-height:31px;}
+
+/*-----------------------一栏----------------------*/
+.oneColumn{ padding:10px 66px;}
+.oneColumn .pages_print .index_switchsize{padding-left:275px;}
+.oneColumn .de_bannerS{ height:100px; padding:15px 26px; margin:38px 0;f}
+.oneColumn .de_bannerS a.bannerA1{ background-position:0px 0px;right:146px;}
+.oneColumn .de_bannerS a.bannerA2{ background-position:0px -72px;right:58px;}
+.oneColumn .newPicture{width:890px; overflow:hidden;}
+.oneColumn .newPicture .con{ width:999px;left:-9px;_left:-18px;}
+.oneColumn .newPicture dl{ text-align:center; width:287px; margin:0 9px; background:#dfdfdf; z-index:1;}
+.oneColumn .newPicture dl dt{ height:167px;}
+.oneColumn .newPicture dl dd{ padding:10px;}
+
+/*add 0122*/
+#pageBreak span{ font-size:16px;}
+#pageBreak a{ font-size:16px;}
+.hotKey a{ font-size:16px;}
+    </style>
+    
+    <hook name="before_head_end"/>
+</head>
+<body class="body-white">
+<include file="public@scripts"/>
+<hook name="before_body_end"/>
+<script type="text/javascript">
+    $(function(){
+        $(".index_switchsize span").click(function(){
+            //获取para的字体大小
+            var thisEle = $(".pages_content p,.pages_content,.pages_content font,.pages_content span,.pages_content div").css("font-size"); 
+            //parseFloat的第二个参数表示转化的进制，10就表示转为10进制
+            var textFontSize = parseFloat(thisEle , 10);
+            //javascript自带方法
+            var unit = thisEle.slice(-2); //获取单位
+            var cName = $(this).attr("class");
+            if(cName == "bigger"){
+                    if( textFontSize <= 22 ){ 
+                        textFontSize += 2; 
+                    } 
+            }else if(cName == "smaller"){
+                    textFontSize -= 2;
+            }
+            //设置para的字体大小
+            $(".pages_content p,.pages_content,.pages_content font,.pages_content span,.pages_content div").css("font-size",  textFontSize + unit );
+        });
+        $(".index_switchsize .medium").click(function(){
+            $(".pages_content p,.pages_content,.pages_content font,.pages_content span,.pages_content div").css("font-size","14px");
+        })
+
+})
+
+
+
+
+    </script>
+<div class="content">
+        <div class="padd">
+          <div class="article oneColumn pub_border">
+            <h1>
+                    {$article.post_title}
+            </h1>
+            <div class="pages-date"><span style="float: left">{:date('Y-m-d H:i',$article.published_time)}  </span>
+            <div class="pages_print" style="margin-right: 10px;"><span class="font index_switchsize">【字体：<span class="bigger">大</span> <span class="medium">中</span> <span class="smaller">小</span>】</span><span style="cursor:pointer;" class="font printIco" onclick="javascript:window.print()">打印</span>
+
+                  </div>
+            </div>
+            <php>
+                    $before_content_hook_param=[
+                    'object_id'=>$article['id'],
+                    'table_name'=>'portal_post',
+                    'object_title'=>$article['post_title'],
+                    'user_id'=>$article['user_id'],
+                    'url'=>cmf_url_encode('portal/Article/index',array('id'=>$article['id'],'cid'=>$category['id'])),
+                    'object'=>$article
+                    ];
+                </php>
+                <hook name="before_content" param="before_content_hook_param"/>
+            <div class="pages_content" id="UCAP-CONTENT">
+                    {$article.post_content}
+                    <if condition="$article['more']['thumbnail'] neq '' ">
+                            <foreach name="$article['more']['photos']" item="vo"> <img width="700" height="500" src="/upload/{$vo.url}" alt="" ></foreach>
+                            </if>
+                            <br />
+                    <if condition="$article['more']['audio'] neq '' ">
+                        <a href="/upload/{$article.more.audio}" target="_blank">音频</a>
+                        </if> <br />
+                        <if condition="$article['more']['video'] neq '' ">
+                                <a href="/upload/{$article.more.video}" target="_blank">视频</a>
+                                </if>
+            </div>
+      <div class="editor"><span></span>编辑：{$article.user.user_nickname} </div>
+      <php>
+            $after_content_hook_param=[
+            'object_id'=>$article['id'],
+            'table_name'=>'portal_post',
+            'object_title'=>$article['post_title'],
+            'user_id'=>$article['user_id'],
+            'url'=>cmf_url_encode('portal/Article/index',array('id'=>$article['id'],'cid'=>$category['id'])),
+            'object'=>$article
+            ];
+        </php>
+        <hook name="after_content" param="after_content_hook_param"/>
+
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+</body>
+</html>

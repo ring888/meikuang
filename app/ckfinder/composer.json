@@ -1,0 +1,17 @@
+{
+  "name"       : "itxq/ckfinder-for-thinkcmf",
+  "description": "ckfinder-for-thinkcmf",
+  "type"       : "cmf-app",
+  "license"    : "MIT",
+  "authors"    : [
+    {
+      "name"    : "IT小强xqitw.cn",
+      "email"   : "mail@xqitw.cn",
+      "homepage": "https://www.xqitw.cn/"
+    }
+  ],
+  "require"    : {
+    "php": ">=7.1.0",
+    "itxq/ckfinder": "^2.0"
+  }
+}

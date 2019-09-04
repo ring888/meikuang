@@ -1,0 +1,219 @@
+<include file="public@header" />
+</head>
+
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('produce/coaloutputrecord')}">煤产量记录</a></li>
+			<li class="active"><a href="{:url('produce/addcoaloutputrecord')}">添加煤产量记录</a></li>
+		</ul>
+		<div class="panel panel-default" style="margin-top:10px;">
+				<div class="panel-heading">添加煤产量记录</div>
+				<div class="panel-body">
+						<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('Produce/addCoalOutputRecordPost')}">
+							<div class="form-group">
+								<label for="input-user_login" class="col-sm-2 control-label">班次</label>
+								<div class="col-md-6 col-sm-10">
+									<select class="form-control" name="classes" id="input-classes">
+										<option value="0">零点班</option>
+										<option value="8">八点班</option>
+										<option value="4">四点班</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input-rawcoal" class="col-sm-2 control-label">原煤仓位（m）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-rawcoal" name="rawcoal" placeholder="原煤仓位（m）">
+								</div>
+								<label for="input-zjtm" class="col-sm-2 control-label">主井提煤（m）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-zjtm" name="zjtm" placeholder="主井提煤（m）">
+								</div>
+				
+							</div>
+							<div class="form-group">
+								<label for="input-rxym_tooo" class="col-sm-2 control-label">入洗原煤3001（吨）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-rxym_tooo" name="rxym_tooo"
+										placeholder="入洗原煤3001（吨）">
+								</div>
+								<label for="input-rxym_toot" class="col-sm-2 control-label">入洗原煤3003（吨）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-rxym_toot" name="rxym_toot"
+										placeholder="入洗原煤3003（吨）">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input-hm_eoo" class="col-sm-2 control-label">801混煤（吨）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-hm_eoo" name="hm_eoo" placeholder="801混煤（吨）">
+								</div>
+								<label for="input-pc_eot" class="col-sm-2 control-label">802喷吹（吨）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-pc_eot" name="pc_eot" placeholder="802喷吹（吨）">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input-xh_eot" class="col-sm-2 control-label">803洗混（吨）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-xh_eot" name="xh_eot" placeholder="803洗混（吨）">
+								</div>
+								<label for="input-kj_eof" class="col-sm-2 control-label">804块精（吨）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-kj_eof" name="kj_eof" placeholder="804块精（吨）">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input-mgs_noo" class="col-sm-2 control-label">901末矸石（吨）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-mgs_noo" name="mgs_noo" placeholder="901末矸石（吨）">
+								</div>
+								<label for="input-kgs_not" class="col-sm-2 control-label">902块矸石（吨）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-kgs_not" name="kgs_not" placeholder="902块矸石（吨）">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input-jcmc" class="col-sm-2 control-label">进储煤场（吨）</label>
+								<div class="col-md-6 col-sm-10">
+									<input type="text" class="form-control" id="input-jcmc" name="jcmc" placeholder="进储煤场（吨）">
+								</div>
+				
+							</div>
+							<div class="form-group">
+				
+				
+								<label for="input-user_email" class="col-sm-2 control-label" style="color: red">地销仓位（m）</label>
+								<div class="col-md-6 col-sm-10">
+									<hr style="color: red"/>
+								</div>
+							</div>
+				
+							<div class="form-group">
+								<label for="input-dxcw_mgs" class="col-sm-2 control-label">1#末矸石（吨）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-dxcw_mgs" name="dxcw_mgs" placeholder="1#末矸石（吨）">
+								</div>
+								<label for="input-dxcw_kgs" class="col-sm-2 control-label">2#块矸石（吨）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-dxcw_kgs" name="dxcw_kgs" placeholder="2#块矸石（吨）">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input-dxcw_mgs" class="col-sm-2 control-label">1#末矸石（吨）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-dxcw_mgs" name="dxcw_mgs" placeholder="1#末矸石（吨）">
+								</div>
+								<label for="input-dxcw_kgs" class="col-sm-2 control-label">2#块矸石（吨）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-dxcw_kgs" name="dxcw_kgs" placeholder="2#块矸石（吨）">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input-dxcw_kjm" class="col-sm-2 control-label">3#块精石（吨）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-dxcw_kjm" name="dxcw_kjm" placeholder="3#块精石（吨）">
+								</div>
+								<label for="input-dxcw_hm_four" class="col-sm-2 control-label">4#混煤（吨）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-dxcw_hm_four" name="dxcw_hm_four"
+										placeholder="4#混煤（吨）">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input-dxcw_pcm" class="col-sm-2 control-label">5#喷吹煤（吨）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-dxcw_pcm" name="dxcw_pcm" placeholder="5#喷吹煤（吨）">
+								</div>
+								<label for="input-dxcw_hm_six" class="col-sm-2 control-label">6#混煤（吨）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-dxcw_hm_six" name="dxcw_hm_six"
+										placeholder="6#混煤（吨）">
+								</div>
+							</div>
+							<div class="form-group">
+				
+				
+								<label for="input-user_email" class="col-sm-2 control-label" style="color: red">事故记录</label>
+								<div class="col-md-6 col-sm-10">
+									<hr/>
+								
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input-trouble_time" class="col-sm-2 control-label">事故时间（h）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-trouble_time" name="trouble_time"
+										placeholder="事故时间（h）">
+								</div>
+								<label for="input-yxdm_time" class="col-sm-2 control-label">有效带煤时间（h）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-yxdm_time" name="yxdm_time"
+										placeholder="有效带煤时间（h）">
+								</div>
+							</div>
+						
+							<div class="form-group">
+								<label for="input-yldl" class="col-sm-2 control-label">压滤打料（台数）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-yldl" name="yldl" placeholder="压滤打料（台数）">
+								</div>
+								<label for="input-jypl" class="col-sm-2 control-label">加压排料（次数）</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-jypl" name="jypl" placeholder="加压排料（次数）">
+								</div>
+							</div>
+				
+							<div class="form-group">
+				
+				
+									<label for="input-user_email" class="col-sm-2 control-label" style="color: red">班组长</label>
+									<div class="col-md-6 col-sm-10">
+											<hr/>
+									</div>
+								</div>
+							<div class="form-group">
+								<label for="input-bzz_dd" class="col-sm-2 control-label">调度</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-bzz_dd" name="bzz_dd" placeholder="调度">
+								</div>
+								<label for="input-bzz_ym" class="col-sm-2 control-label">原煤</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-bzz_ym" name="bzz_ym" placeholder="原煤">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input-bzz_zx" class="col-sm-2 control-label">主洗</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-bzz_zx" name="bzz_zx" placeholder="主洗">
+								</div>
+								<label for="input-bzz_ys" class="col-sm-2 control-label">运输</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-bzz_ys" name="bzz_ys" placeholder="运输">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="input-bzz_jx" class="col-sm-2 control-label">机修</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-bzz_jx" name="bzz_jx" placeholder="机修">
+								</div>
+								<label for="input-bzz_dg" class="col-sm-2 control-label">电工</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-bzz_dg" name="bzz_dg" placeholder="电工">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10">
+									<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+								</div>
+							</div>
+						</form>
+				</div>
+			  </div>
+		
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+
+</html>
