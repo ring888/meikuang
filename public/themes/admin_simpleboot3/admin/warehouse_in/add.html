@@ -4,14 +4,14 @@
 <body>
 	<div class="wrap">
 		<ul class="nav nav-tabs">
-			<li><a href="{:url('warehouse_ex/index')}">出库管理</a></li>
-			<li class="active">编辑</li>
+			<li><a href="{:url('warehouse_in/index')}">入库管理</a></li>
+			<li class="active"><a href="{:url('warehouse_in/add')}">添加</a></li>
 		</ul>
-		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('warehouse_ex/editPost')}">
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('warehouse_in/addPost')}">
 			<div class="form-group">
 				<label for="input-sn" class="col-sm-2 control-label">单据号<span class="form-required">*</span></label>
 				<div class="col-md-6 col-sm-10">
-					<input type="text" class="form-control" id="input-sn" name="sn" value="{$sn}">
+					<input type="text" class="form-control" id="input-sn" name="sn" value="SN{:date('Ymdhis',time())}{:rand(10000,99999)}">
 				</div>
 			</div>
 			<div class="form-group">
@@ -19,8 +19,8 @@
 					class="form-required">*</span></label>
 				<div class="col-md-6 col-sm-10">
 					<select class="form-control" name="warehouse" id="input-warehouse">
-						<foreach name="whouse" item="v">
-							<option value="{$v.id}" <if condition="$warehouse eq $v['id']">selected</if>>{$v.wh_name}</option>
+						<foreach name="warehouse" item="v">
+							<option value="{$v.id}">{$v.wh_name}</option>
 						</foreach>
 					</select>
 				</div>
@@ -32,7 +32,7 @@
 				<div class="col-md-6 col-sm-10">
 						<select class="form-control" name="creater" id="input-creater">
 								<foreach name="admins" item="v">
-									<option value="{$v.user_nickname}" <if condition="$creater eq $v['user_nickname']">selected</if> >{$v.user_nickname}</option>
+									<option value="{$v.user_nickname}">{$v.user_nickname}</option>
 								</foreach>
 							</select>
 				</div>
@@ -40,7 +40,7 @@
 			<div class="form-group">
 				<label for="input-gys" class="col-sm-2 control-label">备注</label>
 				<div class="col-md-6 col-sm-10">
-					<textarea class="form-control" name="remarks" style="height: 100px;" placeholder="请填写备注">{$remarks}</textarea>
+					<textarea class="form-control" name="remarks" style="height: 100px;" placeholder="请填写备注"></textarea>
 				</div>
 
 			</div>
@@ -62,24 +62,23 @@
 										</tr>
 									</thead>
 									<tbody>
-                                        <foreach name="order_goods" item="v">
 										<tr role="row" class="odd order-list">
 											<td>
 												<a href="javascript:void(0);" onclick="add_list(this)"> [ + ] </a>
 											</td>
 											<td>
-													<input class="form-control" type="text" style="width:400px;" required value="{$v.goods_name}"
+													<input class="form-control" type="text" style="width:400px;" required value=""
 													placeholder="请选择物品" onclick="doSelectCategory(this);" id="js-categories-name-input" name="goods-input[]"
 													readonly/>
-											 <input class="form-control" type="hidden" value="{$v.goods_id}" name="goods[]"
+											 <input class="form-control" type="hidden" value="" name="goods[]"
 													id="js-categories-id-input"/>
 											</td>
-											<td><input type="text" class="form-control" value="{$v.nums}" name="num[]"></td>
+											<td><input type="text" class="form-control" value="" name="num[]"></td>
 											<td>
 												<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> [ - ] </a>
 											</td>
 										</tr>
-                                        </foreach>
+				
 									</tbody>
 									</table>
 					</div>
@@ -89,8 +88,7 @@
 					
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-                        <input type="hidden" name="id" value="{$id}" />
-					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('EDIT')}</button>
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
 					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
 				</div>
 			</div>
@@ -112,7 +110,7 @@
 
 		function doSelectCategory(ojb) {
         var selectedCategoriesId = $('#js-categories-id-input').val();
-        openIframeLayer("{:url('WarehouseEx/select')}?ids=" + selectedCategoriesId, '请选择物品', {
+        openIframeLayer("{:url('WarehouseIn/select')}?ids=" + selectedCategoriesId, '请选择物品', {
             area: ['800px', '400px'],
             btn: ['确定', '取消'],
             yes: function (index, layero) {

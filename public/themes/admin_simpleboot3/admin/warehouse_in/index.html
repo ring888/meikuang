@@ -3,17 +3,17 @@
 <body>
 <div class="wrap">
     <ul class="nav nav-tabs">
-			<li class="active"><a href="{:url('warehouse_ex/index')}">出库管理</a></li>
-			<li><a href="{:url('warehouse_ex/add')}">添加</a></li>
+			<li class="active"><a href="{:url('warehouse_in/index')}">入库管理</a></li>
+			<li><a href="{:url('warehouse_in/add')}">添加</a></li>
     </ul>
-    <form class="well form-inline margin-top-20" method="post" action="{:url('warehouse_ex/index')}">
+    <form class="well form-inline margin-top-20" method="post" action="{:url('warehouse_in/index')}">
         
         单据号:
         <input type="text" class="form-control" name="sn" style="width: 120px;" value="{:input('request.sn/s','')}" placeholder="请输入单据号">
         制单人:
         <input type="text" class="form-control" name="creater" style="width: 120px;" value="{:input('request.creater/s','')}" placeholder="请输入制单人">
     <input type="submit" class="btn btn-primary" value="搜索"/>
-        <a class="btn btn-danger" href="{:url('admin/warehouse_ex/index')}">清空</a>
+        <a class="btn btn-danger" href="{:url('admin/warehouse_in/index')}">清空</a>
         <!-- <div class="btn-group dropdown-btn-group pull-right">
 
                 <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">过滤某列数据
@@ -62,13 +62,13 @@
                         <td> {$vo.creater} </td>
                         <td> {:date('Y-m-d H:i',$vo['create_time'])} </td>
                         <td>
-                                <a class="btn btn-xs btn-primary" href="{:url('warehouse_ex/edit',array('id'=>$vo['id']))}">{:lang('EDIT')}</a>
-                                <a class="btn btn-xs btn-success" href="{:url('warehouse_ex/prints',array('id'=>$vo['id']))}" target="_blank"
+                                <a class="btn btn-xs btn-primary" href="{:url('warehouse_in/edit',array('id'=>$vo['id']))}">{:lang('EDIT')}</a>
+                                <a class="btn btn-xs btn-success" href="{:url('warehouse_in/prints',array('id'=>$vo['id']))}" target="_blank"
                                     class="btn btn-secondary btn-sm btn-icon icon-left">
                                     打印
                                 </a>
     
-                                <a class="btn btn-xs btn-info" href="javascript:parent.openIframeLayer('{:url('warehouse_ex/show',array('id'=>$vo['id']))}','查看',{area: ['700px', '80%']});" class="btn btn-secondary btn-sm btn-icon icon-left">
+                                <a class="btn btn-xs btn-info" href="javascript:parent.openIframeLayer('{:url('warehouse_in/show',array('id'=>$vo['id']))}','查看',{area: ['700px', '80%']});" class="btn btn-secondary btn-sm btn-icon icon-left">
                                     查看
                                 </a>
 

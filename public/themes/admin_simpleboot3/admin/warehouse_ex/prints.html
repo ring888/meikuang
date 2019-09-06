@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Xenon Boostrap Admin Panel" />
+    <meta name="author" content="" />
+    
+    <title>出库单</title>
+
+    <link rel="stylesheet" href="__STATIC__/css/bootstrap.css">
+    <link rel="stylesheet" href="__STATIC__/css/xenon-core.css">
+    <link rel="stylesheet" href="__STATIC__/css/xenon-forms.css">
+    <link rel="stylesheet" href="__STATIC__/css/xenon-components.css">
+    <link rel="stylesheet" href="__STATIC__/css/xenon-skins.css">
+    <link rel="stylesheet" href="__STATIC__/css/custom.css">
+
+    <script src="__STATIC__/js/jquery-1.11.1.min.js"></script>
+    <script src="__STATIC__/js/jQuery.print.js"></script>
+    
+</head>
+<body class="page-body">
+<div class="page-container">    
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+
+                    <div class="row">   
+                        <div class="pull-left">
+                            <div class="form-group">
+                                <label class="control-label">单据号</label>
+                                <label class="control-label">{$info.sn}</label>
+                            </div>  
+                        </div>
+                        <div class="pull-right">
+                            <img src="{:url('/Instorage/barcode/sn/'.$info.sn)}" alt="">
+                         </div>
+                    </div>
+
+                    <div class="row" style="margin-top:20px;">   
+                        <div class="pull-left>
+                            <div class="form-group">
+                                <label class="control-label">制单人</label>
+                                <label class="control-label">{$info.creater}</label>
+                            </div>  
+                        </div>
+                          
+                    </div>
+
+
+                    <table class="table table-striped table-bordered table-hover dataTable no-footer">
+                        <thead>
+                            <tr role="row">
+                                <th>产品名称</th>
+                                <th>产品编号</th>
+                                <th>出库数</th>
+                                
+                                <th>仓库</th>
+                                <th>单位</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+<foreach name="order_goods" id="vo">
+                                <tr role="row" class="odd">
+                                    <td>
+                                        <label class="control-label">{$vo.goods_name}</label>
+                                    </td>
+                                    <td> 
+                                        <label class="control-label">{$vo.goods_no}</label>
+                                    </td>
+                                    <td>
+                                        <label class="control-label">{$vo.nums}</label>
+                                    </td>                                    
+                                    <td>
+                                        <label class="control-label">{$vo.wh_name}</label>
+                                    </td>
+                                    <td>
+                                        <label class="control-label">{$vo.danwei}</label>
+                                    </td>
+                                   
+                                </tr>
+                                
+                               
+</foreach>
+
+                        </tbody>
+                    </table>
+
+                    <div class="row" style="margin-top:20px;">
+                        <div class="col-md-12">
+                            <div class="form-group no-margin">
+                                <label class="control-label">备注</label>
+                                <label class="control-label">{$info.remarks}</label>
+                            </div>  
+                        </div>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+
+
+<div>
+</body>
+</html>
+
+<script>
+$(function(){
+   p(); 
+});
+
+function p(){
+    $(".page-container").print();
+}
+</script>

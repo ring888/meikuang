@@ -12,22 +12,12 @@ namespace app\admin\validate;
 
 use think\Validate;
 
-class WarehouseGoodsValidate extends Validate
+class WarehouseExValidate extends Validate
 {
     protected $rule = [
-        'warehouse' => 'require',
-        'goods_name'  => 'require',
-        'goods_type'  => 'require',
-        'danwei'  => 'require',
-
+        'sn' => 'require',
     ];
-
     protected $message = [
-        'warehouse.require' => '仓库不能为空',
-        'goods_name.require'  => '物品名称不能为空',
-        'goods_type.require'  => '规格不能为空',
-        'danwei.require'  => '单位不能为空',
-
+        'sn.require' => '单据号不能为空',
     ];
-
 }

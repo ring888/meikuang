@@ -15,19 +15,19 @@ use think\Db;
 use think\db\Query;
 
 
-class WarehouseExController extends AdminBaseController
+class WarehouseInController extends AdminBaseController
 {
 
     /**
-     * 出库管理
+     * 入库管理
      * @adminMenu(
-     *     'name'   => '出库管理',
+     *     'name'   => '入库管理',
      *     'parent' => 'admin/WarehouseEx/default',
      *     'display'=> true,
      *     'hasView'=> true,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '出库管理',
+     *     'remark' => '入库管理',
      *     'param'  => ''
      * )
      * @throws \think\exception\DbException
@@ -39,7 +39,7 @@ class WarehouseExController extends AdminBaseController
         $creater = $this->request->param('creater');
 
         $order = Db::name('warehouse_order')
-            ->where("type",1)
+            ->where("type",2)
             ->where(function (Query $query) use ($sn, $creater) {
                 if ($sn) {
                     $query->where('sn', 'like', "%$sn%");
@@ -111,7 +111,7 @@ class WarehouseExController extends AdminBaseController
                 'creater' => $data['creater'],
                 'warehouse' => $data['warehouse'],
                 'remarks'   => $data['remarks'],
-                'type'      => 1,
+                'type'      => 2,
                 'create_time' => time(),
             ];
             $result = Db::name('warehouse_order')->insertGetId($order);
@@ -143,15 +143,15 @@ class WarehouseExController extends AdminBaseController
     }
 
     /**
-     * 出库信息编辑
+     * 入库信息编辑
      * @adminMenu(
-     *     'name'   => '出库信息编辑',
+     *     'name'   => '入库信息编辑',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> true,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '出库信息编辑',
+     *     'remark' => '入库信息编辑',
      *     'param'  => ''
      * )
      */
@@ -179,15 +179,15 @@ class WarehouseExController extends AdminBaseController
     }
 
     /**
-     * 出库信息编辑提交
+     * 入库信息编辑提交
      * @adminMenu(
-     *     'name'   => '出库信息编辑提交',
+     *     'name'   => '入库信息编辑提交',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '出库信息编辑提交',
+     *     'remark' => '入库信息编辑提交',
      *     'param'  => ''
      * )
      */
@@ -206,7 +206,7 @@ class WarehouseExController extends AdminBaseController
                 'creater' => $data['creater'],
                 'warehouse' => $data['warehouse'],
                 'remarks'   => $data['remarks'],
-                'type'      => 1,
+                'type'      => 2,
                 'create_time' => time(),
             ];
             $result = Db::name('warehouse_order')->save($order);
@@ -249,15 +249,15 @@ class WarehouseExController extends AdminBaseController
 
 
     /**
-     * 出库信息删除
+     * 入库信息删除
      * @adminMenu(
-     *     'name'   => '出库信息删除',
+     *     'name'   => '入库信息删除',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '出库信息删除',
+     *     'remark' => '入库信息删除',
      *     'param'  => ''
      * )
      */
@@ -274,15 +274,15 @@ class WarehouseExController extends AdminBaseController
     }
 
        /**
-     * 出库信息物品选择框
+     * 入库信息物品选择框
      * @adminMenu(
-     *     'name'   => '出库信息物品选择框',
+     *     'name'   => '入库信息物品选择框',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> true,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '出库信息物品选择框',
+     *     'remark' => '入库信息物品选择框',
      *     'param'  => ''
      * )
      * @return mixed

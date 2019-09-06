@@ -4,10 +4,10 @@
 <body>
 	<div class="wrap">
 		<ul class="nav nav-tabs">
-			<li><a href="{:url('warehouse_ex/index')}">出库管理</a></li>
+			<li><a href="{:url('warehouse_in/index')}">入库管理</a></li>
 			<li class="active">编辑</li>
 		</ul>
-		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('warehouse_ex/editPost')}">
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('warehouse_in/editPost')}">
 			<div class="form-group">
 				<label for="input-sn" class="col-sm-2 control-label">单据号<span class="form-required">*</span></label>
 				<div class="col-md-6 col-sm-10">
@@ -112,7 +112,7 @@
 
 		function doSelectCategory(ojb) {
         var selectedCategoriesId = $('#js-categories-id-input').val();
-        openIframeLayer("{:url('WarehouseEx/select')}?ids=" + selectedCategoriesId, '请选择物品', {
+        openIframeLayer("{:url('WarehouseIn/select')}?ids=" + selectedCategoriesId, '请选择物品', {
             area: ['800px', '400px'],
             btn: ['确定', '取消'],
             yes: function (index, layero) {

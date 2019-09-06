@@ -16,7 +16,6 @@ use app\portal\model\PortalDeviceCategoryModel;
 use think\Db;
 use app\admin\model\ThemeModel;
 
-
 class AdminDeviceCategoryController extends AdminBaseController
 {
     /**

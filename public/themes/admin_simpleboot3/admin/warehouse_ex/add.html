@@ -1,37 +1,91 @@
 <include file="public@header" />
 </head>
+
 <body>
 	<div class="wrap">
 		<ul class="nav nav-tabs">
-			<li><a href="{:url('warehouse/index')}">仓库信息管理</a></li>
-			<li class="active"><a href="{:url('warehouse/add')}">添加仓库信息</a></li>
+			<li><a href="{:url('warehouse_ex/index')}">出库管理</a></li>
+			<li class="active"><a href="{:url('warehouse_ex/add')}">添加</a></li>
 		</ul>
-		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('warehouse/addPost')}">
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('warehouse_ex/addPost')}">
 			<div class="form-group">
-				<label for="input-wh_name" class="col-sm-2 control-label">仓库名称<span class="form-required">*</span></label>
+				<label for="input-sn" class="col-sm-2 control-label">单据号<span class="form-required">*</span></label>
 				<div class="col-md-6 col-sm-10">
-						<input type="text" class="form-control" id="input-wh_name" name="wh_name">
+					<input type="text" class="form-control" id="input-sn" name="sn" value="SN{:date('Ymdhis',time())}{:rand(10000,99999)}">
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="input-wh_code" class="col-sm-2 control-label">仓库编号<span class="form-required">*</span></label>
+				<label for="input-warehouse" class="col-sm-2 control-label">仓库<span
+					class="form-required">*</span></label>
 				<div class="col-md-6 col-sm-10">
-					<input type="text" class="form-control" id="input-wh_code" name="wh_code">
+					<select class="form-control" name="warehouse" id="input-warehouse">
+						<foreach name="warehouse" item="v">
+							<option value="{$v.id}">{$v.wh_name}</option>
+						</foreach>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="input-creater" class="col-sm-2 control-label">制单人<span
+						class="form-required">*</span></label>
+				<div class="col-md-6 col-sm-10">
+						<select class="form-control" name="creater" id="input-creater">
+								<foreach name="admins" item="v">
+									<option value="{$v.user_nickname}">{$v.user_nickname}</option>
+								</foreach>
+							</select>
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="input-wh_fzr" class="col-sm-2 control-label">负责人<span class="form-required">*</span></label>
+				<label for="input-gys" class="col-sm-2 control-label">备注</label>
 				<div class="col-md-6 col-sm-10">
-						<input type="text" class="form-control" id="input-wh_fzr" name="wh_fzr">
+					<textarea class="form-control" name="remarks" style="height: 100px;" placeholder="请填写备注"></textarea>
+				</div>
+
+			</div>
+			<div class="form-group">
+					<label for="input-gys" class="col-sm-2 control-label">产品清单<span
+						class="form-required">*</span></label>
+					<div class="col-md-6 col-sm-10">
+							<table class="table table-striped table-bordered table-hover dataTable no-footer" >
+									<thead>
+										<tr role="row">
+											<th></th>
+											<th class="sorting_disabled" rowspan="1" colspan="1">
+												产品名称
+											</th>
+											<th class="sorting_disabled" rowspan="1" colspan="1">
+												出库数
+											</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr role="row" class="odd order-list">
+											<td>
+												<a href="javascript:void(0);" onclick="add_list(this)"> [ + ] </a>
+											</td>
+											<td>
+													<input class="form-control" type="text" style="width:400px;" required value=""
+													placeholder="请选择物品" onclick="doSelectCategory(this);" id="js-categories-name-input" name="goods-input[]"
+													readonly/>
+											 <input class="form-control" type="hidden" value="" name="goods[]"
+													id="js-categories-id-input"/>
+											</td>
+											<td><input type="text" class="form-control" value="" name="num[]"></td>
+											<td>
+												<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> [ - ] </a>
+											</td>
+										</tr>
+				
+									</tbody>
+									</table>
 					</div>
-			</div>
-			
-			<div class="form-group">
-				<label for="input-remarks" class="col-sm-2 control-label">备注</label>
-				<div class="col-md-6 col-sm-10">
-					<textarea class="form-control" name="remarks" id="input-remarks" ></textarea>
+	
 				</div>
-			</div>
+
+					
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
@@ -40,6 +94,47 @@
 			</div>
 		</form>
 	</div>
+	<script>
+
+		function add_list(obj) {
+			// $(obj).parent().parent().hide();
+			//var clone = $(obj).parent().parent().clone();
+			//clone.find("input[name='goods-input'],input[name='nums']").val("");
+		
+			$(obj).parent().parent().clone().appendTo($(obj).parent().parent().parent());
+		}
+
+		function del_list(obj) {
+			$(obj).parent().parent().remove();
+		}
+
+		function doSelectCategory(ojb) {
+        var selectedCategoriesId = $('#js-categories-id-input').val();
+        openIframeLayer("{:url('WarehouseEx/select')}?ids=" + selectedCategoriesId, '请选择物品', {
+            area: ['800px', '400px'],
+            btn: ['确定', '取消'],
+            yes: function (index, layero) {
+                //do something
+
+                var iframeWin          = window[layero.find('iframe')[0]['name']];
+                var selectedCategories = iframeWin.confirm();
+                if (selectedCategories.selectedCategoriesId.length == 0) {
+                    layer.msg('请选择分类');
+                    return;
+				}
+				$(ojb).next().val(selectedCategories.selectedCategoriesId);
+				$(ojb).val(selectedCategories.selectedCategoriesName);
+				//$(ojb).find("input[name='goods']").val(selectedCategories.selectedCategoriesId)
+                //$('#js-categories-id-input').val(selectedCategories.selectedCategoriesId);
+				//$('#js-categories-name-input').val(selectedCategories.selectedCategoriesName);
+				//$(ojb).find("input[name='goods-input']").val(selectedCategories.selectedCategoriesName)
+                //console.log(layer.getFrameIndex(index));
+                layer.close(index); //如果设定了yes回调，需进行手工关闭
+            }
+        });
+    }
+	</script>
 	<script src="__STATIC__/js/admin.js"></script>
 </body>
+
 </html>
