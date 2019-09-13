@@ -49,6 +49,7 @@ class AdminCategoryController extends AdminBaseController
 
         if (empty($keyword)) {
             $categoryTree = $portalCategoryModel->adminCategoryTableTree();
+
             $this->assign('category_tree', $categoryTree);
         } else {
             $categories = $portalCategoryModel->where('name', 'like', "%{$keyword}%")

@@ -1,0 +1,59 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+        <div class="table-actions">
+                
+                <a class="btn btn-primary btn-sm" href="javascript:parent.openIframeLayer('{:url('DeviceMaintain/maintain_add',array('id'=>$device_id))}','添加保养记录',{area: ['70%', '70%']});">添加保养记录</a>
+
+            </div>
+                    
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+
+                <th width="50">ID</th>
+                <th>保养单号</th>
+                <th>保养类型</th>
+                <th>保养部门</th>
+                
+                <th>保养工人</th>
+                <th>保养部位</th>
+          
+                <th>保养时间</th>
+                
+                <th >{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                <tr>
+   
+                    <td>{$vo.id}</td>
+                    <td>{$vo.sn}</td>
+                    <td>{$vo.maintain_type}</td>
+                    <td>{$vo.department_name}</td>
+                    <td>{$vo.maintain_worker}</td>
+                    <td>{$vo.maintain_part}</td>
+                    <td> {:date('Y-m-d H:i',$vo['maintain_time'])}</td>
+                    
+                    <td>
+                        	<a class="btn btn-xs btn-info"
+                                            href="javascript:parent.openIframeLayer('{:url('DeviceMaintain/maintain_show',array('id'=>$vo['id']))}','查看',{area: ['70%', '80%']});"
+                                            class="btn btn-secondary btn-sm btn-icon icon-left">
+                                            详情
+                                        </a>
+                        <a class="btn btn-xs btn-primary" href="javascript:parent.openIframeLayer('{:url('DeviceMaintain/maintain_edit',array('id'=>$vo['id']))}','编辑',{area: ['70%', '70%']});">{:lang('EDIT')}</a>
+                        <a class="btn btn-xs btn-danger  js-ajax-delete" href="{:url('DeviceMaintain/maintain_delete',array('id'=>$vo['id'],'device_id'=>$vo['device_id']))}" class="js-ajax-delete">
+                            {:lang('DELETE')}
+                        </a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<include file="public@header" />
+</head>
+
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:url('device/index')}">设备管理</a></li>
+			<li class="active">编辑</li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('device/editPost')}">
+				<div class="form-group">
+					<label for="input-sn" class="col-sm-2 control-label">设备名称<span class="form-required">*</span></label>
+					<div class="col-md-6 col-sm-10">
+						<input type="text" class="form-control" id="input-device_name" value="{$device['device_name']}" required name="device_name" placeholder="请填写设备名称">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="input-warehouse" class="col-sm-2 control-label">设备分类<span
+						class="form-required">*</span></label>
+					<div class="col-md-6 col-sm-10">
+							<input class="form-control" type="text" style="width:400px;" required value="{$device['name']}"
+							placeholder="请选择分类" onclick="doSelectCategory();" id="js-categories-name-input"
+							readonly/>
+					 <input class="form-control" type="hidden" value="{$device['device_type']}" name="device_type"
+							id="js-categories-id-input"/>
+					</div>
+				</div>
+	
+				<div class="form-group">
+					<label for="input-creater" class="col-sm-2 control-label">设备位置号<span
+							class="form-required">*</span></label>
+					<div class="col-md-6 col-sm-10">
+							<input type="text" class="form-control" required id="input-device_location" name="device_location" value="{$device['device_location']}" placeholder="请填写设备位置号">	
+					</div>
+				</div>
+				<div class="form-group">
+						<label for="input-gys" class="col-sm-2 control-label">设备技术参数</label>
+						<div class="col-md-6 col-sm-10">
+							<textarea class="form-control" required name="device_detail" style="height: 50px;" placeholder="请填写设备技术参数">{$device['device_detail']}</textarea>
+						</div>
+		
+					</div>
+					<div class="form-group">
+							<label for="input-sn" class="col-sm-2 control-label">单位<span class="form-required">*</span></label>
+							<div class="col-md-2 col-sm-10">
+								<input type="text" required class="form-control" id="input-device_danwei" placeholder="请填写单位" value="{$device['device_danwei']}"  name="device_danwei">
+							</div>
+	
+							<label for="input-sn" class="col-sm-2 control-label">数量<span class="form-required">*</span></label>
+							<div class="col-md-2 col-sm-10">
+								<input type="text" required class="form-control" id="input-device_nums" name="device_nums" value="{$device['device_nums']}" placeholder="请填写数量">
+							</div>
+						</div>
+						<div class="form-group">
+								<label for="input-sn" class="col-sm-2 control-label">单重</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text"  class="form-control" id="input-single_weight" name="single_weight" value="{$device['single_weight']}" placeholder="请填写单重">
+								</div>
+		
+								<label for="input-sn" class="col-sm-2 control-label">总重</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control" id="input-total_weight" name="total_weight" value="{$device['total_weight']}" placeholder="请填写总重">
+								</div>
+							</div>
+							<div class="form-group">
+									<label for="input-status" class="col-sm-2 control-label">设备状态<span
+										class="form-required">*</span></label>
+									<div class="col-md-2 col-sm-10">
+										<select class="form-control" name="status" id="input-status">
+											<foreach name="device_status" item="v">
+												<option value="{$v.id}" <if condition="$device['status'] eq $v['id']">selected</if>>{$v.name}</option>
+											</foreach>
+										</select>
+									</div>
+
+									<label for="input-status" class="col-sm-2 control-label">使用部门<span
+										class="form-required">*</span></label>
+									<div class="col-md-2 col-sm-10">
+										<select class="form-control" name="department" id="input-status">
+											<foreach name="department" item="v">
+												<option value="{$v.id}" <if condition="$device['department'] eq $v['id']">selected</if>>{$v.name}</option>
+											</foreach>
+										</select>
+									</div>
+								</div>
+				<div class="form-group">
+					<label for="input-gys" class="col-sm-2 control-label">备注</label>
+					<div class="col-md-6 col-sm-10">
+						<textarea class="form-control" name="remarks" style="height: 100px;" placeholder="请填写备注">{$device['remarks']}</textarea>
+					</div>
+	
+				</div>
+					
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+                        <input type="hidden" name="id" value="{$device['id']}" />
+					<button type="submit" class="btn btn-primary js-ajax-submit">{:lang('EDIT')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script>
+			function doSelectCategory() {
+			var selectedCategoriesId = $('#js-categories-id-input').val();
+			openIframeLayer("{:url('portal/AdminDeviceCategory/select')}?ids=" + selectedCategoriesId, '请选择分类', {
+				area: ['900px', '500px'],
+				btn: ['确定', '取消'],
+				yes: function (index, layero) {
+					//do something
+	
+					var iframeWin          = window[layero.find('iframe')[0]['name']];
+					var selectedCategories = iframeWin.confirm();
+					
+					if (selectedCategories.selectedCategoriesId.length == 0) {
+						layer.msg('请选择分类');
+						return;
+					}
+					$('#js-categories-id-input').val(selectedCategories.selectedCategoriesId);
+					$('#js-categories-name-input').val(selectedCategories.selectedCategoriesName);
+					//console.log(layer.getFrameIndex(index));
+					layer.close(index); //如果设定了yes回调，需进行手工关闭
+				}
+			});
+		}
+		</script>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+
+</html>

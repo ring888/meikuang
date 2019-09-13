@@ -16,7 +16,7 @@ use app\portal\service\PostService;
 use app\portal\model\PortalCategoryModel;
 use think\Db;
 use app\admin\model\ThemeModel;
-
+use app\portal\service\ApiService;
 class AdminArticleController extends AdminBaseController
 {
     /**
@@ -47,7 +47,21 @@ class AdminArticleController extends AdminBaseController
         $param = $this->request->param();
 
         $categoryId = $this->request->param('category', 0, 'intval');
+        $cate_api = ApiService::allSubCategories($categoryId);
 
+        $subcategories =array();
+
+        foreach ($cate_api as $k => $v) {
+
+            $subcategories[] = $v['id'];
+
+        }
+
+        if(!empty($subcategories)){
+
+                $param['category'] = array_merge((array)$categoryId,$subcategories);
+
+        }
         $postService = new PostService();
         $data        = $postService->adminArticleList($param);
 

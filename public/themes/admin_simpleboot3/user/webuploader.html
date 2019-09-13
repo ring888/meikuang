@@ -100,17 +100,24 @@
             file.url         = file.filepath;
             file.name        = "";//jQuery(".filelist li .title").eq(i).html();
             files.push(file);
+            
+            
         } else {
             var number = jQuery(".filelist li").size();
             for (var i = 0; i < number; i++) {
 
                 var file         = new Object();
                 var $file        = jQuery(".filelist li").eq(i);
+                
                 file.id          = idPre + i;
                 file.filepath    = $file.data("filepath");
+                
                 file.preview_url = $file.data("preview_url");//httpUrl+file.filepath;
                 file.url         = $file.data("url");
                 file.name        = $file.data("name");
+                file.size        = $file.data("size");
+                
+                
                 if (file.url == undefined) {
                     continue;
                 } else {
@@ -644,14 +651,18 @@
                 var stats;
                 switch (type) {
                     case 'uploadSuccess':
-//                        console.log(file);
-//                        console.log(msg);
+                        //console.log(file);
+                        //console.log(msg);
                         if (msg._raw != '') {
                             var $file = jQuery("#" + file.id);
+                            
                             $file.data("filepath", msg.data.filepath);
                             $file.data("name", msg.data.name);
                             $file.data("url", msg.data.url);
                             $file.data("preview_url", msg.data.preview_url);
+                            $file.data("size",file.size/1024);
+                            
+                            
                         }
                         break;
                     case 'uploadFinished':

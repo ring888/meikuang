@@ -1,0 +1,66 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+        <div class="table-actions">
+                
+                <a class="btn btn-primary btn-sm" href="javascript:parent.openIframeLayer('{:url('DeviceRunhua/runhua_add',array('id'=>$device_id))}','添加润滑记录',{area: ['70%', '70%']});">添加润滑记录</a>
+
+            </div>
+                    
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+
+                <th width="50">ID</th>
+                <th>单号</th>
+                <th>润滑类型</th>
+                <th>加油部位</th>
+                <th>油品牌号</th>
+                <th>加油量</th>
+                <th>加油方式</th>
+                <th>润滑部门</th>
+                
+                <th>润滑工人</th>
+                
+                <th>润滑时间</th>
+                
+                <th >{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                <tr>
+   
+                    <td>{$vo.id}</td>
+                    <td>{$vo.sn}</td>
+                    <td>{$vo.runhua_type}</td>
+                    <td>{$vo.runhua_part}</td>
+                    <td>{$vo.oil_brand_no}</td>
+                    <td>{$vo.oil_total}</td>
+                    <td>{$vo.oil_type}</td>
+                    <td>{$vo.department_name}</td>
+                    <td>{$vo.runhua_worker}</td>
+         
+                    <td> {:date('Y-m-d H:i',$vo['runhua_time'])}</td>
+                    
+                    <td>
+                        	<a class="btn btn-xs btn-info"
+                                            href="javascript:parent.openIframeLayer('{:url('DeviceRunhua/runhua_show',array('id'=>$vo['id']))}','查看',{area: ['70%', '80%']});"
+                                            class="btn btn-secondary btn-sm btn-icon icon-left">
+                                            详情
+                                        </a>
+                        <a class="btn btn-xs btn-primary" href="javascript:parent.openIframeLayer('{:url('DeviceRunhua/runhua_edit',array('id'=>$vo['id']))}','编辑',{area: ['70%', '70%']});">{:lang('EDIT')}</a>
+                        <a class="btn btn-xs btn-danger  js-ajax-delete" href="{:url('DeviceRunhua/runhua_delete',array('id'=>$vo['id'],'device_id'=>$vo['device_id']))}" class="js-ajax-delete">
+                            {:lang('DELETE')}
+                        </a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

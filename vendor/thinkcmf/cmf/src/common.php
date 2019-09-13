@@ -576,6 +576,10 @@ function cmf_get_upload_setting()
                 'file'  => [
                     'upload_max_filesize' => '1024000',
                     'extensions'          => 'txt,pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar'
+                ],
+                'all'  => [
+                    'upload_max_filesize' => '1024000',
+                    'extensions'          => 'txt,pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar,jpg,jpeg,png,gif,bmp4,mp4,avi,wmv,rm,rmvb,mkv,mp3,wma,wav,txt,pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar'
                 ]
             ],
             'chunk_size' => 512,//单位KB

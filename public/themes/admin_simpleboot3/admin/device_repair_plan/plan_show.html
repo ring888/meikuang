@@ -1,0 +1,89 @@
+<include file="public@header" />
+</head>
+
+<body>
+	<div class="wrap">
+		<div class="panel panel-default">
+
+			<div class="panel-body">
+				<form method="post" class="form-horizontal js-ajax-form margin-top-20"
+					action="#" >
+
+					<div class="form-group">
+						<label for="input-sn" class="col-sm-2 control-label">设备名称<span
+								class="form-required">*</span></label>
+						<div class="col-md-2 col-sm-10">
+							<input type="text" class="form-control" id="input-device_name"
+								value="{$info['device_name']}" required name="device_name" disabled="disabled">
+						</div>
+						<label for="input-warehouse" class="col-sm-2 control-label">设备分类<span
+								class="form-required">*</span></label>
+						<div class="col-md-2 col-sm-10">
+							<input class="form-control" type="text" required value="{$info['category_name']}"
+								id="js-categories-name-input" disabled="disabled" />
+
+						</div>
+					</div>
+
+
+					<div class="form-group">
+
+						<label for="input-creater" class="col-sm-2 control-label">上次检修时间<span
+								class="form-required">*</span></label>
+						<div class="col-md-2 col-sm-10">
+
+							<input required type="text" class="form-control js-bootstrap-datetime" disabled="disabled"
+								name="last_repair_time" value="{$info['last_repair_time']}" autocomplete="off">
+						</div>
+						<label for="input-creater" class="col-sm-2 control-label">检修周期（天）<span
+								class="form-required">*</span></label>
+						<div class="col-md-2 col-sm-10">
+							<input type="text" class="form-control" required id="input-period_count" placeholder="请填写检修周期（天）"
+							disabled="disabled" name="period_count" value="{$info['period_count']}">
+						</div>
+
+
+					</div>
+
+					<div class="form-group">
+						<label for="input-gys" class="col-sm-2 control-label">检修部门</label>
+						<div class="col-md-2 col-sm-10">
+							<select class="form-control" name="department" id="input-status" disabled="disabled">
+								<foreach name="department" item="v">
+									<option value="{$v.id}" <if condition="$info['department'] eq $v['id']">selected</if>>{$v.name}</option>
+								</foreach>
+							</select>
+						</div>
+
+					</div>
+					<div class="form-group">
+						<label for="input-sn" class="col-sm-2 control-label">检修负责人</label>
+						<div class="col-md-2 col-sm-10">
+							<input type="text" class="form-control" id="input-repair_worker" disabled="disabled" value="{$info['repair_worker']}" placeholder="请填写检修负责人"
+								name="repair_worker">
+						</div>
+
+						<label for="input-sn" class="col-sm-2 control-label">检修部位</label>
+						<div class="col-md-2 col-sm-10">
+							<input type="text" class="form-control" disabled="disabled" id="input-repair_part" name="repair_part" value="{$info['repair_part']}"
+								placeholder="请填写检修部位">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="input-gys" class="col-sm-2 control-label">检修内容</label>
+						<div class="col-md-6 col-sm-10">
+							<textarea class="form-control" disabled="disabled" name="repair_details" style="height: 100px;"
+								placeholder="检修内容">{$info['repair_details']}</textarea>
+						</div>
+
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+
+</html>

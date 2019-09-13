@@ -55,7 +55,8 @@ class Upload
             'image' => ['title' => 'Image files', 'extensions' => $uploadSetting['file_types']['image']['extensions']],
             'video' => ['title' => 'Video files', 'extensions' => $uploadSetting['file_types']['video']['extensions']],
             'audio' => ['title' => 'Audio files', 'extensions' => $uploadSetting['file_types']['audio']['extensions']],
-            'file'  => ['title' => 'Custom files', 'extensions' => $uploadSetting['file_types']['file']['extensions']]
+            'file'  => ['title' => 'Custom files', 'extensions' => $uploadSetting['file_types']['file']['extensions']],
+            'all'  => ['title' => 'All files', 'extensions' => $uploadSetting['file_types']['all']['extensions']]
         ];
 
         $arrData = $this->request->param();

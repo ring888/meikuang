@@ -21,7 +21,7 @@ class AdminDeviceCategoryController extends AdminBaseController
     /**
      * 设备分类列表
      * @adminMenu(
-     *     'name'   => '分类管理',
+     *     'name'   => '设备分类',
      *     'parent' => 'admin/Device/default',
      *     'display'=> true,
      *     'hasView'=> true,
@@ -183,7 +183,6 @@ class AdminDeviceCategoryController extends AdminBaseController
         } else {
             $this->error('操作错误!');
         }
-
     }
 
     /**
@@ -244,23 +243,30 @@ class AdminDeviceCategoryController extends AdminBaseController
         $portalCategoryModel = new PortalDeviceCategoryModel();
 
         $tpl = <<<tpl
-<tr class='data-item-tr'>
-    <td>
-        <input type='checkbox' class='js-check' data-yid='js-check-y' data-xid='js-check-x' name='ids[]'
-               value='\$id' data-name='\$name' \$checked>
-    </td>
-    <td>\$id</td>
-    <td>\$spacer <a href='\$url' target='_blank'>\$name</a></td>
-</tr>
+        <tr name='data-item-tr' id='node-\$id' \$parent_id_node style='\$style' data-parent_id='\$parent_id' data-id='\$id'>
+        <td style='padding-left:20px;'><input type='radio' class='js-check' data-yid='js-check-y' data-xid='js-check-x' name='ids[]'
+        value='\$id' data-name='\$name' \$checked></td>
+        
+        <td>\$spacer \$name</td>
+    </tr>
 tpl;
 
-        $categoryTree = $portalCategoryModel->adminCategoryTableTree($selectedIds, $tpl);
+        $keyword             = $this->request->param('keyword');
 
-        $categories = $portalCategoryModel->where('delete_time', 0)->select();
+        if (empty($keyword)) {
+            $categoryTree = $portalCategoryModel->adminCategoryTableTree($selectedIds, $tpl);
+            $this->assign('category_tree', $categoryTree);
+        } else {
+            $categories = $portalCategoryModel->where('name', 'like', "%{$keyword}%")
+                ->where('delete_time', 0)->select();
+            $this->assign('categories', $categories);
+        }
 
-        $this->assign('categories', $categories);
+        $this->assign('keyword', $keyword);
+
+
+
         $this->assign('selectedIds', $selectedIds);
-        $this->assign('categories_tree', $categoryTree);
         return $this->fetch();
     }
 
@@ -311,7 +317,6 @@ tpl;
             $portalCategoryModel->where('id', 'in', $ids)->update(['status' => 0]);
             $this->success("更新成功！");
         }
-
     }
 
     /**
@@ -344,10 +349,10 @@ tpl;
             $this->error('此分类有子类无法删除!');
         }
 
-        $categoryPostCount = Db::name('portal_device_category_post')->where('category_id', $id)->count();
+        $categoryPostCount = Db::name('device')->where('device_type', $id)->count();
 
         if ($categoryPostCount > 0) {
-            $this->error('此分类有文章无法删除!');
+            $this->error('此分类有设备无法删除!');
         }
 
         $data   = [

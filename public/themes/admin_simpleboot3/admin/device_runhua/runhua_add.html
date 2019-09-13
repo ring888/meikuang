@@ -1,0 +1,121 @@
+<include file="public@header" />
+</head>
+
+<body>
+	<div class="wrap">
+			<div class="panel panel-default">
+					
+					<div class="panel-body">
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('DeviceRunhua/runhua_addPost')}" onsubmit="return save('{$info.id}');">
+			
+			<div class="form-group">
+				<label for="input-sn" class="col-sm-2 control-label">设备名称<span class="form-required">*</span></label>
+				<div class="col-md-2 col-sm-10">
+					<input type="text" class="form-control" id="input-device_name" value="{$info['device_name']}" required name="device_name" disabled="disabled">
+				</div>
+				<label for="input-warehouse" class="col-sm-2 control-label">设备分类<span
+					class="form-required">*</span></label>
+				<div class="col-md-2 col-sm-10">
+						<input class="form-control" type="text"  required value="{$info['name']}"
+						 id="js-categories-name-input"
+						 disabled="disabled"/>
+				
+				</div>
+			</div>
+			<div class="form-group">
+					<label for="input-creater" class="col-sm-2 control-label">润滑单号<span
+							class="form-required">*</span></label>
+					<div class="col-md-2 col-sm-10">
+						
+					<input type="text" class="form-control" id="input-sn" name="sn" value="RH{:date('Ymdhis',time())}{:rand(10000,99999)}">
+					</div>
+					<label for="input-creater" class="col-sm-2 control-label">润滑时间<span
+						class="form-required">*</span></label>
+				<div class="col-md-2 col-sm-10">
+						<input required type="text" class="form-control js-bootstrap-datetime" name="runhua_time" value="{:date('Y-m-d H:i',time())}"
+                autocomplete="off">
+				</div>
+				
+				</div>
+
+			<div class="form-group">
+				
+
+				<label for="input-gys" class="col-sm-2 control-label">润滑部门</label>
+					<div class="col-md-2 col-sm-10">
+							<select class="form-control" name="department" id="input-status">
+								<foreach name="department" item="v">
+									<option value="{$v.id}">{$v.name}</option>
+								</foreach>
+							</select>
+						</div>
+						<label for="input-sn" class="col-sm-2 control-label">油品牌号</label>
+								<div class="col-md-2 col-sm-10">
+									<input type="text" class="form-control"  id="input-oil_brand_no" placeholder="请填写油品牌号"
+										name="oil_brand_no">
+								</div>
+			</div>
+			
+				<div class="form-group">
+						<label for="input-sn" class="col-sm-2 control-label">负责人</label>
+						<div class="col-md-2 col-sm-10">
+							<input type="text"  class="form-control" id="input-runhua_worker" placeholder="请填写负责人"  name="runhua_worker">
+						</div>
+
+						<label for="input-sn" class="col-sm-2 control-label">润滑部位</label>
+						<div class="col-md-2 col-sm-10">
+							<input type="text"  class="form-control" id="input-runhua_part" name="runhua_part" placeholder="请填写润滑部位">
+						</div>
+					</div>
+					<div class="form-group">
+							
+							<label for="input-sn" class="col-sm-2 control-label">加油量</label>
+							<div class="col-md-2 col-sm-10">
+								<input type="text" class="form-control" id="input-oil_total" name="oil_total"
+									placeholder="请填写加油量">
+							</div>
+							<label for="input-sn" class="col-sm-2 control-label">加油方式</label>
+							<div class="col-md-2 col-sm-10">
+								<input type="text" class="form-control" id="input-oil_type" name="oil_type"
+									placeholder="请填写加油方式">
+							</div>
+						</div>
+					<div class="form-group">
+							<label for="input-gys" class="col-sm-2 control-label">润滑内容</label>
+							<div class="col-md-6 col-sm-10">
+								<textarea class="form-control" name="remarks" style="height: 100px;" placeholder="润滑内容"></textarea>
+							</div>
+			
+						</div>			
+			
+					
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+						<input type="hidden" name="device_id" value="{$info['id']}" />
+						<notempty name="plan_id"><input type="hidden" name="plan_id" value="{$plan_id}" /></notempty>
+						
+					<button id="tijiao"   type="submit"  class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+		</form>
+		</div>
+		</div>
+
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+	<script type="text/javascript">
+	function save(id){
+		$("#tijiao").attr("disabled","disabled");
+     let time1 = setInterval(function(){
+　　　　　　　　　　//父级弹框关闭
+                parent.layer.closeAll(); 
+　　　　　　　　　　//父级页面刷新
+$(window.parent.document).find("iframe[name='runhua_frame']").attr("src",'/admin/device_runhua/runhua/id/'+id);
+            },500);
+ }
+
+</script>
+</body>
+
+</html>

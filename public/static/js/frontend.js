@@ -1216,6 +1216,8 @@ function openUploadDialog(dialog_title, callback, extra_params, multi, filetype,
                     var iframewindow = this.iframe.contentWindow;
                     var files        = iframewindow.get_selected_files();
                     console.log(files);
+                    console.log(123123);
+                    
                     if (files && files.length > 0) {
                         callback.apply(this, [this, files, extra_params]);
                     } else {
@@ -1287,6 +1289,7 @@ function uploadMultiImage(dialog_title, container_selector, item_tpl_wrapper_id,
             itemtpl     = itemtpl.replace(/\{preview_url\}/g, item.preview_url);
             itemtpl     = itemtpl.replace(/\{filepath\}/g, item.filepath);
             itemtpl     = itemtpl.replace(/\{name\}/g, item.name);
+            itemtpl     = itemtpl.replace(/\{size\}/g, item.size);
             html += itemtpl;
         });
         $(container_selector).append(html);
@@ -1309,12 +1312,14 @@ function uploadMultiFile(dialog_title, container_selector, item_tpl_wrapper_id, 
         var tpl  = $('#' + item_tpl_wrapper_id).html();
         var html = '';
         $.each(files, function (i, item) {
+            
             var itemtpl = tpl;
             itemtpl     = itemtpl.replace(/\{id\}/g, item.id);
             itemtpl     = itemtpl.replace(/\{url\}/g, item.url);
             itemtpl     = itemtpl.replace(/\{preview_url\}/g, item.preview_url);
             itemtpl     = itemtpl.replace(/\{filepath\}/g, item.filepath);
             itemtpl     = itemtpl.replace(/\{name\}/g, item.name);
+            itemtpl     = itemtpl.replace(/\{size\}/g, item.size);
             html += itemtpl;
         });
         $(container_selector).append(html);

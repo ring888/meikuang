@@ -1,0 +1,69 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+        <div class="table-actions">
+                
+                <a class="btn btn-primary btn-sm" href="javascript:parent.openIframeLayer('{:url('DeviceMaintainPlan/plan_add',array('id'=>$device_id))}','添加保养计划',{area: ['70%', '70%']});">添加保养计划</a>
+
+            </div>
+                    
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+
+                <th width="50">ID</th>
+                
+                <th>设备名称</th>
+                
+                <th>设备类型</th>
+                <th>保养部位</th>
+                <th>保养负责人</th>
+                <th>上次保养时间</th>
+                <th>保养周期（日）</th>
+                <th>状态</th>
+                <th >{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                    <php>
+                            $time = time();
+                            $day = ($time - $vo['last_maintain_time'])/86400;
+                            $tag = $day-$vo['period_count'];
+                            
+                    </php>
+                <tr <if condition="$tag egt 0">style="background-color:gray"</if> >
+   
+                    <td>{$vo.id}</td>
+                    <td>{$vo.device_name}</td>
+                    <td>{$vo.department_name}</td>
+                    
+                    <td>{$vo.maintain_part}</td>
+                    <td>{$vo.maintain_worker}</td>
+                    <td> {:date('Y-m-d H:i',$vo['last_maintain_time'])}</td> 
+                    <td>{$vo.period_count} </td>
+                    <td>
+                            <if condition="$tag egt 0">已过期<else/>未到期</if>
+                        </td>
+                    <td>
+                            <a class="btn btn-xs btn-primary" href="{:url('device_maintain/maintain_add',array('plan_id'=>$vo['id'],'id'=>$vo['device_id']))}">执行计划</a>
+                        	<a class="btn btn-xs btn-info"
+                                            href="javascript:parent.openIframeLayer('{:url('DeviceMaintainPlan/plan_show',array('id'=>$vo['id']))}','详情',{area: ['70%', '80%']});"
+                                            class="btn btn-secondary btn-sm btn-icon icon-left">
+                                            详情
+                                        </a>
+                        <a class="btn btn-xs btn-primary" href="javascript:parent.openIframeLayer('{:url('DeviceMaintainPlan/plan_edit',array('id'=>$vo['id']))}','编辑',{area: ['70%', '70%']});">{:lang('EDIT')}</a>
+                        <a class="btn btn-xs btn-danger  js-ajax-delete" href="{:url('DeviceMaintainPlan/plan_delete',array('id'=>$vo['id'],'device_id'=>$vo['device_id']))}" class="js-ajax-delete">
+                            {:lang('DELETE')}
+                        </a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap">
+    <form class="well form-inline margin-top-20" method="post" action="{:url('device/select_device')}">
+        设备分类：
+        <select class="form-control" name="category" style="width: 140px;">
+				<option value='0'>全部</option>
+				{$category_tree|default=''}
+			</select> &nbsp;&nbsp;
+        关键字：
+        <input class="form-control" type="text" name="keyword" style="width: 230px;" value="{:input('request.keyword')}"
+               placeholder="设备名称/设备位置号/技术参数">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('device/select_device')}">清空</a>
+    </form>
+    <form method="post" class="js-ajax-form">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th><label>
+                        
+                    </label></th>
+                <th>ID</th>
+                <th>设备名称</th>
+                <th>设备分类</th>
+                <th>设备位置号</th>
+                <th>技术参数</th>
+               
+           
+            </tr>
+            </thead>
+            <tbody>
+            
+            <foreach name="list" item="vo">
+                <tr class='data-item-tr'>
+                        <td>
+                                <input type='radio' class='js-check' data-yid='js-check-y' data-xid='js-check-x' name='ids'
+                                       value='{$vo.id}' data-name='{$vo.device_name}' data-category='{$vo.device_type_category}'>
+                            </td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.device_name}
+                    </td>
+                    <td>{$vo.device_type_category}</td>
+                    <td>{$vo.device_location}</td>
+                    <td>{$vo.device_detail}</td>
+                    
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script>
+        $('.data-item-tr').click(function (e) {
+    
+            console.log(e);
+            var $this = $(this);
+            if ($(e.target).is('input')) {
+                return;
+            }
+    
+            var $input = $this.find('input');
+            if ($input.is(':checked')) {
+                $input.prop('checked', false);
+            } else {
+                $input.prop('checked', true);
+            }
+        });
+    
+        function confirm() {
+            var selectedCategoriesId   = [];
+            var selectedCategoriesName = [];
+            var selectedCategoriesCategory = [];
+            var selectedCategories     = [];
+            $('.js-check:checked').each(function () {
+                var $this = $(this);
+                selectedCategoriesId.push($this.val());
+                selectedCategoriesName.push($this.data('name'));
+                selectedCategoriesCategory.push($this.data('category'));
+                selectedCategories.push({
+                    id: $this.val(),
+                    name: $this.data('name'),
+                    category: $this.data('category')
+                });
+            });
+    
+            return {
+                selectedCategories: selectedCategories,
+                selectedCategoriesId: selectedCategoriesId,
+                selectedCategoriesName: selectedCategoriesName,
+                selectedCategoriesCategory: selectedCategoriesCategory
+            };
+        }
+    </script>
+</body>
+</html>

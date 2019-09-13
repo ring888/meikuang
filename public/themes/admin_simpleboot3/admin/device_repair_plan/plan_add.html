@@ -1,0 +1,111 @@
+<include file="public@header" />
+</head>
+
+<body>
+	<div class="wrap">
+		<div class="panel panel-default">
+
+			<div class="panel-body">
+				<form method="post" class="form-horizontal js-ajax-form margin-top-20"
+					action="{:url('DeviceRepairPlan/plan_addPost')}" onsubmit="return save('{$info.id}');">
+
+					<div class="form-group">
+						<label for="input-sn" class="col-sm-2 control-label">设备名称<span
+								class="form-required">*</span></label>
+						<div class="col-md-2 col-sm-10">
+							<input type="text" class="form-control" id="input-device_name"
+								value="{$info['device_name']}" required name="device_name" disabled="disabled">
+						</div>
+						<label for="input-warehouse" class="col-sm-2 control-label">设备分类<span
+								class="form-required">*</span></label>
+						<div class="col-md-2 col-sm-10">
+							<input class="form-control" type="text" required value="{$info['name']}"
+								id="js-categories-name-input" disabled="disabled" />
+
+						</div>
+					</div>
+
+
+					<div class="form-group">
+
+						<label for="input-creater" class="col-sm-2 control-label">上次检修时间<span
+								class="form-required">*</span></label>
+						<div class="col-md-2 col-sm-10">
+
+							<input required type="text" class="form-control js-bootstrap-datetime"
+								name="last_repair_time" value="{:date('Y-m-d H:i',time())}" autocomplete="off">
+						</div>
+						<label for="input-creater" class="col-sm-2 control-label">检修周期（天）<span
+								class="form-required">*</span></label>
+						<div class="col-md-2 col-sm-10">
+							<input type="text" class="form-control" required id="input-period_count" placeholder="请填写检修周期（天）"
+								name="period_count">
+						</div>
+
+
+					</div>
+
+					<div class="form-group">
+						<label for="input-gys" class="col-sm-2 control-label">检修部门</label>
+						<div class="col-md-2 col-sm-10">
+							<select class="form-control" name="department" id="input-status">
+								<foreach name="department" item="v">
+									<option value="{$v.id}">{$v.name}</option>
+								</foreach>
+							</select>
+						</div>
+
+					</div>
+					<div class="form-group">
+						<label for="input-sn" class="col-sm-2 control-label">检修负责人</label>
+						<div class="col-md-2 col-sm-10">
+							<input type="text" class="form-control" id="input-repair_worker" placeholder="请填写检修负责人"
+								name="repair_worker">
+						</div>
+
+						<label for="input-sn" class="col-sm-2 control-label">检修部位</label>
+						<div class="col-md-2 col-sm-10">
+							<input type="text" class="form-control" id="input-repair_part" name="repair_part"
+								placeholder="请填写检修部位">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="input-gys" class="col-sm-2 control-label">检修内容</label>
+						<div class="col-md-6 col-sm-10">
+							<textarea class="form-control" name="repair_details" style="height: 100px;"
+								placeholder="检修内容"></textarea>
+						</div>
+
+					</div>
+
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<input type="hidden" name="device_id" value="{$info['id']}" />
+							<button id="tijiao" type="submit"
+								class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+							<a class="btn btn-default" href="javascript:save({$info['id']});">{:lang('BACK')}</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+	<script type="text/javascript">
+		function save(id) {
+			$("#tijiao").attr("disabled", "disabled");
+			let time1 = setInterval(function () {
+				//父级弹框关闭
+				parent.layer.closeAll();
+				//父级页面刷新
+				$(window.parent.document).find("iframe[name='repair_plan_frame']").attr("src", '/admin/device_repair_plan/plan/id/' + id);
+			}, 500);
+		}
+
+	</script>
+</body>
+
+</html>

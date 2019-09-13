@@ -2,42 +2,75 @@
 </head>
 <body>
 <div class="wrap js-check-wrap">
-    <form method="post" class="js-ajax-form" action="{:url('AdminDeviceCategory/listorders')}">
-        <table class="table table-hover table-bordered table-list">
-            <thead>
-            <tr>
-                <th width="16">
-                    <label>
-                        <input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">
-                    </label>
-                </th>
-                <th width="50">ID</th>
-                <th>分类名称</th>
-            </tr>
-            </thead>
-            <tbody>
-            <!--
-            <foreach name="categories" item="vo">
+    <form class="well form-inline margin-top-20" method="post" action="{:url('AdminDeviceCategory/select')}">
+        分类名称:
+        <input type="text" class="form-control" name="keyword" style="width: 200px;"
+               value="{$keyword|default=''}" placeholder="请输入分类名称">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('AdminDeviceCategory/select')}">清空</a>
+    </form>
+
+    <form method="post" class="js-ajax-form" action="{:url('AdminDeviceCategory/listOrder')}">
+        <empty name="keyword">
+            <table class="table table-hover table-bordered table-list" id="menus-table">
+                <thead>
                 <tr>
-                    <td>
-                        <php>$checked = in_array($vo['id'],$selectedIds)?'checked':'';</php>
-                        <input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
-                               value="{$vo.id}" data-name="{$vo.name}" {$checked}>
-                    </td>
-                    <td>{$vo.id}</td>
-                    <td>{$vo.name}</td>
-                    <td>{$vo.description}</td>
+                    <th width="16" style="padding-left:20px;">
+                        <label>
+                            
+                        </label>
+                    </th>
+                    <th>分类名称</th>
+                   
                 </tr>
-            </foreach>
-            -->
-            {$categories_tree}
-            </tbody>
-        </table>
+                </thead>
+                {$category_tree}
+            </table>
+            <else/>
+            <table class="table table-hover table-bordered table-list">
+                <thead>
+                <tr>
+                    <th width="16">
+                        <label>
+                            
+                        </label>
+                    </th>
+
+                    <th>分类名称</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <foreach name="categories" item="vo">
+                    <tr name="data-item-tr">
+                        <td>
+                                <input type='radio' class='js-check' data-yid='js-check-y' data-xid='js-check-x' name='ids[]'
+                                value='{$vo.id}' data-name='{$vo.name}' \$checked>
+                        </td>
+                        <td>{$vo.name}
+                        </td>
+    
+                    </tr>
+
+                </foreach>
+                </tbody>
+            </table>
+        </empty>
     </form>
 </div>
 <script src="__STATIC__/js/admin.js"></script>
 <script>
-    $('.data-item-tr').click(function (e) {
+    $(document).ready(function () {
+        Wind.css('treeTable');
+        Wind.use('treeTable', function () {
+            $("#menus-table").treeTable({
+                indent: 20,
+                initialState: 'collapsed'
+            });
+        });
+    });
+
+    $("tr[name='data-item-tr']").click(function (e) {
 
         console.log(e);
         var $this = $(this);

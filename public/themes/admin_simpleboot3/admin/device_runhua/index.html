@@ -1,0 +1,93 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+        <div class="panel panel-default">
+                <div class="panel-heading">检修记录</div>
+                <div class="panel-body">
+        <ul class="nav nav-tabs">
+                <li class="active"><a href="{:url('device_runhua/index')}">检修记录</a></li>
+                <li><a href="{:url('device_runhua/add')}">添加</a></li>
+            </ul>
+            <form class="well form-inline margin-top-20" method="post" action="{:url('device_runhua/index')}">
+                部门:
+                <select class="form-control" name="category" style="width: 140px;" id="dept_select">
+                        <option value='0'>全部</option>
+                        <foreach name="department" item="v">
+                            <option value="{$v.id}" <if condition="$category eq $v['id']">selected</if>>{$v.name}</option>
+                        </foreach>
+                </select> &nbsp;&nbsp;
+                时间:
+                <input type="text" class="form-control js-bootstrap-datetime" name="start_time"
+                    value="{$start_time|default=''}"
+                    style="width: 140px;" autocomplete="off">-
+                <input type="text" class="form-control js-bootstrap-datetime" name="end_time"
+                    value="{$end_time|default=''}"
+                    style="width: 140px;" autocomplete="off"> &nbsp; &nbsp;
+                关键字：
+                <input class="form-control" type="text" name="keyword" style="width: 230px;"
+                    value="{:input('request.keyword')}" placeholder="单号/设备名称/维修工人">
+                <input type="submit" class="btn btn-primary" value="搜索" />
+                <a class="btn btn-danger" href="{:url('device_runhua/index')}">清空</a>
+            </form>
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+
+                <th width="50">ID</th>
+                <th>单号</th>
+                <th>设备名称</th>
+                <th>润滑类型</th>
+                <th>加油部位</th>
+                <th>油品牌号</th>
+                <th>加油量</th>
+                <th>加油方式</th>
+                <th>润滑部门</th>
+                
+                <th>润滑工人</th>
+                
+                <th>润滑时间</th>
+                
+                <th >{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                <tr>
+   
+                    <td>{$vo.id}</td>
+                    <td>{$vo.sn}</td>
+                    <td>{$vo.device_name}</td>
+                    <td>{$vo.runhua_type}</td>
+                    <td>{$vo.runhua_part}</td>
+                    <td>{$vo.oil_brand_no}</td>
+                    <td>{$vo.oil_total}</td>
+                    <td>{$vo.oil_type}</td>
+                    <td>{$vo.department_name}</td>
+                    <td>{$vo.runhua_worker}</td>
+         
+                    <td> {:date('Y-m-d H:i',$vo['runhua_time'])}</td>
+                    
+                    <td>
+                        	<a class="btn btn-xs btn-info"
+                                            href="javascript:parent.openIframeLayer('{:url('DeviceRunhua/runhua_show',array('id'=>$vo['id']))}','查看',{area: ['70%', '80%']});"
+                                            class="btn btn-secondary btn-sm btn-icon icon-left">
+                                            详情
+                                        </a>
+                        <a class="btn btn-xs btn-primary" href="{:url('DeviceRunhua/edit',array('id'=>$vo['id']))}">{:lang('EDIT')}</a>
+                        <a class="btn btn-xs btn-danger  js-ajax-delete" href="{:url('DeviceRunhua/runhua_delete',array('id'=>$vo['id'],'device_id'=>$vo['device_id'],'tag'=>1))}" class="js-ajax-delete">
+                            {:lang('DELETE')}
+                        </a>
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+        </div>
+        </div>
+
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

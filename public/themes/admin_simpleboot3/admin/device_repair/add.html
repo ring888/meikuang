@@ -1,0 +1,126 @@
+<include file="public@header" />
+</head>
+
+<body>
+	<div class="wrap">
+			<div class="panel panel-default">
+					<div class="panel-heading">新增记录</div>
+					<div class="panel-body">
+							<ul class="nav nav-tabs">
+									<li ><a href="{:url('DeviceRepair/index')}">检修记录</a></li>
+									<li class="active"><a href="{:url('DeviceRepair/add')}">添加</a></li>
+								</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('DeviceRepair/repair_addPost')}" >
+			
+			<div class="form-group">
+					<label for="input-sn" class="col-sm-2 control-label">选择设备<span class="form-required">*</span></label>
+					<div class="col-md-2 col-sm-10">
+							<input class="form-control" type="text" style="width:400px;" required value=""
+							placeholder="请选择设备" onclick="doSelectCategory(this);" id="js-categories-name-input" name="device_name"
+							readonly/>
+							<input class="form-control" type="hidden" value="" name="device_id"
+														id="js-categories-id-input"/>
+					</div>
+					<label for="input-warehouse" class="col-sm-2 control-label">设备分类<span
+						class="form-required">*</span></label>
+					<div class="col-md-2 col-sm-10">
+							<input class="form-control" type="text"  required value="" 
+							 id="js-categories-category-input"
+							 disabled="disabled"/>
+					
+					</div>
+			</div>
+			<div class="form-group">
+					<label for="input-creater" class="col-sm-2 control-label">检修单号<span
+							class="form-required">*</span></label>
+					<div class="col-md-6 col-sm-10">
+						
+					<input type="text" class="form-control" id="input-sn" name="sn" value="JX{:date('Ymdhis',time())}{:rand(10000,99999)}">
+					</div>
+	
+				
+				</div>
+
+			<div class="form-group">
+				<label for="input-creater" class="col-sm-2 control-label">检修时间<span
+						class="form-required">*</span></label>
+				<div class="col-md-2 col-sm-10">
+						<input required type="text" class="form-control js-bootstrap-datetime" name="repair_time" value="{:date('Y-m-d H:i',time())}"
+                autocomplete="off">
+				</div>
+
+				<label for="input-gys" class="col-sm-2 control-label">检修部门</label>
+					<div class="col-md-2 col-sm-10">
+							<select class="form-control" name="department" id="input-status">
+								<foreach name="department" item="v">
+									<option value="{$v.id}">{$v.name}</option>
+								</foreach>
+							</select>
+						</div>
+			</div>
+			
+				<div class="form-group">
+						<label for="input-sn" class="col-sm-2 control-label">检修人</label>
+						<div class="col-md-2 col-sm-10">
+							<input type="text"  class="form-control" id="input-repair_worker" placeholder="请填写检修人"  name="repair_worker">
+						</div>
+
+						<label for="input-sn" class="col-sm-2 control-label">检修部位</label>
+						<div class="col-md-2 col-sm-10">
+							<input type="text"  class="form-control" id="input-repair_part" name="repair_part" placeholder="请填写检修部位">
+						</div>
+					</div>
+					
+					<div class="form-group">
+							<label for="input-gys" class="col-sm-2 control-label">检修内容</label>
+							<div class="col-md-6 col-sm-10">
+								<textarea class="form-control" name="repair_details" style="height: 100px;" placeholder="检修内容"></textarea>
+							</div>
+			
+						</div>			
+			
+					
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+						
+						<notempty name="plan_id"><input type="hidden" name="plan_id" value="{$plan_id}" /></notempty>
+						
+					<button id="tijiao"   type="submit"  class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+		</form>
+		</div>
+		</div>
+
+	</div>
+	<script type="text/javascript">
+		function doSelectCategory() {
+			var selectedCategoriesId = $('#js-categories-id-input').val();
+			openIframeLayer("{:url('admin/device/select_device')}?ids=" + selectedCategoriesId, '请选择分类', {
+				area: ['900px', '500px'],
+				btn: ['确定', '取消'],
+				yes: function (index, layero) {
+					//do something
+	
+					var iframeWin          = window[layero.find('iframe')[0]['name']];
+					var selectedCategories = iframeWin.confirm();
+					
+					if (selectedCategories.selectedCategoriesId.length == 0) {
+						layer.msg('请选择分类');
+						return;
+					}
+					$('#js-categories-id-input').val(selectedCategories.selectedCategoriesId);
+					$('#js-categories-name-input').val(selectedCategories.selectedCategoriesName);
+					$('#js-categories-category-input').val(selectedCategories.selectedCategoriesCategory);
+					//console.log(layer.getFrameIndex(index));
+					layer.close(index); //如果设定了yes回调，需进行手工关闭
+				}
+			});
+		}
+	
+	</script>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,113 @@
+<include file="public@header" />
+<style type="text/css">
+    .pic-list li {
+        margin-bottom: 5px;
+    }
+</style>
+<script type="text/html" id="photos-item-tpl">
+    <li id="saved-image{id}">
+        <input id="photo-{id}" type="hidden" name="photo_urls[]" value="{filepath}">
+        <input class="form-control" id="photo-{id}-name" type="text" name="photo_names[]" value="{name}"
+               style="width: 200px;" title="图片名称">
+        <img id="photo-{id}-preview" src="{url}" style="height:36px;width: 36px;"
+             onclick="imagePreviewDialog(this.src);">
+        <a href="javascript:uploadOneImage('图片上传','#photo-{id}');">替换</a>
+        <a href="javascript:(function(){$('#saved-image{id}').remove();})();">移除</a>
+    </li>
+</script>
+<script type="text/html" id="files-item-tpl">
+    <li id="saved-file{id}">
+		<input id="file-{id}" type="hidden" name="file_urls[]" value="{filepath}">
+		<input id="file-{id}-size" type="hidden" name="file_size[]" value="{size}">
+        <input class="form-control" id="file-{id}-name" type="text" name="file_names[]" value="{name}"
+               style="width: 200px;" title="文件名称">
+        <a id="file-{id}-preview" href="{preview_url}" target="_blank">下载</a>
+        <a href="javascript:uploadOne('文件上传','#file-{id}','all');">替换</a>
+        <a href="javascript:(function(){$('#saved-file{id}').remove();})();">移除</a>
+    </li>
+</script>
+</head>
+
+<body>
+	<div class="wrap">
+			<div class="panel panel-default">
+					
+					<div class="panel-body">
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('DeviceDocument/document_editPost')}">
+			
+			<div class="form-group">
+				<label for="input-sn" class="col-sm-2 control-label">设备名称<span class="form-required">*</span></label>
+				<div class="col-md-2 col-sm-10">
+					<input type="text" class="form-control" id="input-device_name" value="{$info['device_name']}" required name="device_name" disabled="disabled">
+				</div>
+				<label for="input-warehouse" class="col-sm-2 control-label">设备分类<span
+					class="form-required">*</span></label>
+				<div class="col-md-2 col-sm-10">
+						<input class="form-control" type="text"  required value="{$info['category_name']}"
+						 id="js-categories-name-input"
+						 disabled="disabled"/>
+				
+				</div>
+			</div>
+			
+
+			<div class="form-group">
+					<label for="input-warehouse" class="col-sm-2 control-label">文档分类<span
+						class="form-required">*</span></label>
+					<div class="col-md-6 col-sm-10">
+							<select class="form-control" name="document_type"  id="dept_select">
+									
+									{$category_tree|default=''}
+								</select> &nbsp;&nbsp;
+					</div>
+			</div>
+				<div class="form-group">
+						<label for="input-warehouse" class="col-sm-2 control-label">选择文件<span
+							class="form-required">*</span></label>
+						<div class="col-md-6 col-sm-10">
+								<ul id="files" class="pic-list list-unstyled form-inline">
+										
+												<php>$file_url=cmf_get_file_download_url($info['document_file']);</php>
+												<li id="saved-file{$info['id']}">
+													<input id="file-{$info['id']}" type="hidden" name="file_urls[]"
+														   value="{$info.document_file}">
+														   <input id="file-{$info['id']}-size" type="hidden" name="file_size[]"
+														   value="{$info.document_size}">
+													<input class="form-control" id="file-{$info['id']}-name" type="text"
+														   name="file_names[]"
+														   value="{$info.document_name}" style="width: 200px;" title="图片名称">
+													<a id="file-{$info['id']}-preview" href="{$file_url}" target="_blank">下载</a>
+													<a href="javascript:uploadOne('文件上传','#file-{$info['id']}','all');">替换</a>
+													
+												</li>
+										
+									</ul>
+						
+						</div>
+				</div>
+					<div class="form-group">
+							<label for="input-gys" class="col-sm-2 control-label">备注</label>
+							<div class="col-md-6 col-sm-10">
+								<textarea class="form-control" name="remarks" style="height: 100px;" placeholder="备注">{$info['remarks']}</textarea>
+							</div>
+			
+						</div>			
+			
+					
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+						<input type="hidden" name="device_id" value="{$info['device_id']}" />
+						<input type="hidden" name="id" value="{$info['id']}" />
+					<button    type="submit"  class="btn btn-primary js-ajax-submit">{:lang('EDIT')}</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+		</form>
+		</div>
+		</div>
+
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+
+</html>

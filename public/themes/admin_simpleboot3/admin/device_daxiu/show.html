@@ -1,0 +1,106 @@
+
+<include file="public@header" />
+</head>
+
+<body>
+	<div class="wrap">
+
+
+            <div class="panel panel-default">
+                    <div class="panel-heading">设备详情</div>
+                    <div class="panel-body">
+<form class="validate" novalidate="novalidate">
+
+	<div class="row">	
+		<div class="col-md-4">
+			<div class="form-group">
+				<label for="field-2" class="control-label">设备名称</label>
+				<input type="text" class="form-control" name="device_name"  value="{$info.device_name}" disabled="disabled">
+			</div>	
+		</div>
+        <div class="col-md-4">
+                <div class="form-group">
+                    <label for="field-2" class="control-label">设备状态</label>
+                    <input type="text" class="form-control" name="device_name"  value="{$info.device_status}" disabled="disabled">
+                </div>	
+            </div>
+	</div>
+
+
+
+    <div class="row">   
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="field-2" class="control-label">设备类型</label>
+                <input type="text" class="form-control" name="author"  value="{$info.name}" disabled="disabled">
+            </div>  
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label">设备位置号</label>
+                <input type="text" class="form-control" name="device_location"  value="{$info.device_location}" disabled="disabled"> 
+            </div>
+        </div>        
+    </div>
+
+
+    <div class="row">   
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="field-2" class="control-label">单位</label>
+                    <input type="text" class="form-control" name="author"  value="{$info.device_danwei}" disabled="disabled">
+                </div>  
+            </div>
+    
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">数量</label>
+                    <input type="text" class="form-control" name="device_location"  value="{$info.device_nums}" disabled="disabled"> 
+                </div>
+            </div>        
+        </div>
+        <div class="row">   
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="field-2" class="control-label">单重</label>
+                        <input type="text" class="form-control" name="author"  value="{$info.single_weight}" disabled="disabled">
+                    </div>  
+                </div>
+        
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">总重</label>
+                        <input type="text" class="form-control" name="device_location"  value="{$info.total_weight}" disabled="disabled"> 
+                    </div>
+                </div>        
+            </div>
+
+
+    <div class="row">
+            <div class="col-md-8">
+                <div class="form-group no-margin">
+                    <label for="field-7" class="control-label">设备技术参数</label>
+                    <textarea class="form-control autogrow" name="desc"  disabled="disabled"
+                    style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 50px;">{$info.device_detail}</textarea>
+                </div>	
+            </div>
+        </div>
+	<div class="row">
+		<div class="col-md-8">
+			<div class="form-group no-margin">
+				<label for="field-7" class="control-label">备注</label>
+				<textarea class="form-control autogrow" name="desc" placeholder="备注" disabled="disabled"
+                style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 50px;">{$info.remarks}</textarea>
+			</div>	
+		</div>
+	</div>
+
+	
+</form>
+</div>
+</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

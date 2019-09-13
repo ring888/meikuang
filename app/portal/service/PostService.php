@@ -53,7 +53,8 @@ class PostService
 
         $field = 'a.*,u.user_login,u.user_nickname,u.user_email';
 
-        $category = empty($filter['category']) ? 0 : intval($filter['category']);
+        //$category = empty($filter['category']) ? 0 : intval($filter['category']);
+        $category = empty($filter['category']) ? 0 : $filter['category'];
         if (!empty($category)) {
             array_push($join, [
                 '__PORTAL_CATEGORY_POST__ b', 'a.id = b.post_id'
@@ -68,9 +69,20 @@ class PostService
             ->where('a.delete_time', 0)
             ->where(function (Query $query) use ($filter, $isPage) {
 
-                $category = empty($filter['category']) ? 0 : intval($filter['category']);
+                $category = empty($filter['category']) ? 0 : $filter['category'];
                 if (!empty($category)) {
-                    $query->where('b.category_id', $category);
+                    
+                    if(is_array($category)) {
+
+                        //$where['b.category_id'] = ['in', $category];
+                        $query->where('b.category_id','in', $category);
+                    }
+        
+                    else{
+        
+                        $query->where('b.category_id', $category);
+        
+                    }
                 }
 
                 $startTime = empty($filter['start_time']) ? 0 : strtotime($filter['start_time']);
