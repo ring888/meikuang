@@ -383,7 +383,7 @@ class WarehouseExController extends AdminBaseController
         ->join('mk_warehouse_goods b', 'a.goods_id=b.id')
         ->join('mk_warehouse c', 'b.warehouse=c.id')
         ->where("a.order_id",$ids)
-        ->field('a.*,b.goods_name,b.goods_no,b.danwei,c.wh_name')
+        ->field('a.*,b.goods_name,b.goods_no,b.goods_type,b.danwei,c.wh_name')
         ->order("a.id asc")
         ->select();       
         $this->assign("order_goods",$order_goods);           

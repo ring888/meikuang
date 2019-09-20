@@ -113,6 +113,7 @@ class DeviceMaintainController extends AdminBaseController
     {
 
         $id                 = $this->request->param('id');
+        $tag                 = $this->request->param('tag', 0, 'intval');
         $plan_id = $this->request->param('plan_id');
         if(!empty($plan_id)){
             $this->assign("plan_id",$plan_id);
@@ -127,7 +128,8 @@ class DeviceMaintainController extends AdminBaseController
                         ->find();
         $department = Db::name('department')->order("id asc")->select();
         $this->assign("department", $department);      
-         $this->assign("info",$order_goods);     
+         $this->assign("info",$order_goods);  
+         $this->assign("tag",$tag);        
         return $this->fetch();
     }
     public function add(){
@@ -142,7 +144,8 @@ class DeviceMaintainController extends AdminBaseController
                         ->find();
         $department = Db::name('department')->order("id asc")->select();
         $this->assign("department", $department);      
-         $this->assign("info",$order_goods);     
+         $this->assign("info",$order_goods);
+        
         return $this->fetch();
     }
         /**

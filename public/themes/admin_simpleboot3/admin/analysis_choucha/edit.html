@@ -1,0 +1,110 @@
+<include file="public@header" />
+</head>
+
+<body>
+	<div class="wrap">
+			<div class="panel panel-default">
+					<div class="panel-heading">抽查样记录</div>
+					<div class="panel-body">
+							<ul class="nav nav-tabs">
+									<li ><a href="{:url('analysis_choucha/index')}">记录列表</a></li>
+									<li class="active"><a href="#">更新记录</a></li>
+								</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('analysis_choucha/editPost')}">
+			<div class="form-group">
+					<label for="input-creater" class="col-sm-2 control-label">日期<span
+							class="form-required">*</span></label>
+					<div class="col-md-6 col-sm-10">
+							<input required type="text" class="form-control js-bootstrap-date" name="record_date" value="{:date('Y-m-d',$info['record_date'])}"
+					autocomplete="off" readonly />
+					</div>
+				</div>
+			
+				<div class="form-group">
+						<label for="input-gys" class="col-sm-2 control-label">记录内容<span
+							class="form-required">*</span></label>
+						<div class="col-md-6 col-sm-10">
+								<table class="table table-striped table-bordered table-hover dataTable no-footer" >
+										<thead>
+											<tr role="row">
+												<th></th>
+												<th>样品编号</th>
+												<th class="sorting_disabled" rowspan="1" colspan="1">
+													灰分
+												</th>
+												<th class="sorting_disabled" rowspan="1" colspan="1">
+													水分
+												</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+												<foreach name="info['more']['code']" item="v" key="k">
+											<tr role="row" class="odd order-list">
+												<td>
+													<a href="javascript:void(0);" onclick="add_list(this)"> [ + ] </a>
+												</td>
+												<td><input  required type="text"  class="form-control" value="{$v}"  name="more[code][]"
+													 /></td>
+												<td>
+														<input type="text" required class="form-control" value="{$info['more']['huifen'][$k]}" name="more[huifen][]">	
+												</td>
+												<td><input type="text" required class="form-control" value="{$info['more']['shuifen'][$k]}" name="more[shuifen][]"></td>
+												<td>
+													<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> [ - ] </a>
+												</td>
+											</tr>
+											</foreach>
+										</tbody>
+										</table>
+						</div>
+		
+					</div>	
+			
+					
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+						<input type="hidden" name="id" value="{$info['id']}" />
+					<button id="tijiao"   type="submit"  class="btn btn-primary js-ajax-submit">更新</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+		</form>
+		</div>
+		</div>
+
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+	<script>
+
+			function add_list(obj) {
+				// $(obj).parent().parent().hide();
+				//var clone = $(obj).parent().parent().clone();
+				//clone.find("input[name='goods-input'],input[name='nums']").val("");
+				var son = `<tr role="row" class="odd order-list">
+												<td>
+													<a href="javascript:void(0);" onclick="add_list(this)"> [ + ] </a>
+												</td>
+												<td><input required type="text" class="form-control"  name="more[code][]"
+													readonly /></td>
+												<td>
+														<input type="text" required class="form-control" value="" name="more[huifen][]">	
+												</td>
+												<td><input type="text" required class="form-control" value="" name="more[shuifen][]"></td>
+												<td>
+													<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> [ - ] </a>
+												</td>
+											</tr>`;
+				//$(obj).parent().parent().clone().appendTo($(obj).parent().parent().parent());
+				$(obj).parent().parent().parent().append(son);
+				
+			}
+	
+			function del_list(obj) {
+				$(obj).parent().parent().remove();
+			}
+	
+		</script>
+</body>
+
+</html>

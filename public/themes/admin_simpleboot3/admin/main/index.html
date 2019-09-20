@@ -182,14 +182,14 @@
                             <div class="stat-icon">
                                 <i class="fa fa-clock-o"></i>
                             </div>
-                            <h2 class="m-top-none">17<span>件</span></h2>
-                            <h5>待审核提案</h5>
+                            <h2 class="m-top-none" ><a style="color: white;" href="{:url('admin/device_alert/maintain')}" ><php>echo count($maintain_list)</php></a><span>个</span></h2>
+                            <h5>设备保养预警</h5>
                         </div>
                     </div>
                     <div class="dashboard-stats">
                         <div class="dashboard-stats-item" style="background-color: #e35b5a;">
-                            <h2 class="m-top-none">12<span>件</span></h2>
-                            <h5>待复审提案</h5>
+                            <h2 class="m-top-none"><a style="color: white;" href="{:url('admin/device_alert/repair')}"><php>echo count($repair_list)</php></a><span>个</span></h2>
+                            <h5>设备维修预警</h5>
                             <div class="stat-icon">
                                 <i class="fa fa-clock-o"></i>
                             </div>
@@ -197,8 +197,8 @@
                     </div>
                     <div class="dashboard-stats">
                         <div class="dashboard-stats-item" style="background-color: #44b6ae;">
-                            <h2 class="m-top-none">20<span>件</span></h2>
-                            <h5>意见建议</h5>
+                            <h2 class="m-top-none"><a style="color: white;" href="{:url('admin/device_alert/runhua')}"><php>echo count($runhua_list)</php></a><span>个</span></h2>
+                            <h5>设备润滑预警</h5>
                             <div class="stat-icon">
                                 <i class="fa fa-file-text-o"></i>
                             </div>
@@ -207,7 +207,7 @@
                     <div class="dashboard-stats">
                         <div class="dashboard-stats-item" style="background-color: #8775a7; margin-right: 0px;">
                             <h2 class="m-top-none">6<span>件</span></h2>
-                            <h5>联名提案</h5>
+                            <h5>XXXX</h5>
                             <div class="stat-icon">
                                 <i class="fa fa-file-text-o"></i>
                             </div>
@@ -216,7 +216,7 @@
                     <div class="dashboard-stats">
                         <div class="dashboard-stats-item" style="background-color: #4f5c65; margin-bottom: 0px;">
                             <h2 class="m-top-none">4<span>件</span></h2>
-                            <h5>个人提案</h5>
+                            <h5>XXXX</h5>
                             <div class="stat-icon">
                                 <i class="fa fa-file-text-o"></i>
                             </div>
@@ -225,7 +225,7 @@
                     <div class="dashboard-stats">
                         <div class="dashboard-stats-item" style="background-color: #14aae4; margin-bottom: 0px;">
                             <h2 class="m-top-none">5<span>件</span></h2>
-                            <h5>民主党派提案</h5>
+                            <h5>XXXX</h5>
                             <div class="stat-icon">
                                 <i class="fa fa-file-text-o"></i>
                             </div>
@@ -234,7 +234,7 @@
                     <div class="dashboard-stats">
                         <div class="dashboard-stats-item" style="background-color: #949FB1; margin-bottom: 0px;">
                             <h2 class="m-top-none">3<span>件</span></h2>
-                            <h5>人民团体提案</h5>
+                            <h5>XXXX</h5>
                             <div class="stat-icon">
                                 <i class="fa fa-file-text-o"></i>
                             </div>
@@ -243,7 +243,7 @@
                     <div class="dashboard-stats">
                         <div class="dashboard-stats-item" style="background-color: #f29503; margin-right: 0px; margin-bottom: 0px;">
                             <h2 class="m-top-none">6<span>件</span></h2>
-                            <h5>其它党派提案</h5>
+                            <h5>XXXX</h5>
                             <div class="stat-icon">
                                 <i class="fa fa-file-text-o"></i>
                             </div>
@@ -254,7 +254,7 @@
             <div style="float: right; width: 30%;">
                 <div style="height: 221px; border: 1px solid #e6e6e6; background-color: #fff;">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><i class="fa fa-area-chart fa-lg" style="padding-right: 5px;"></i>提案结果统计</div>
+                        <div class="panel-heading"><i class="fa fa-area-chart fa-lg" style="padding-right: 5px;"></i>XXXXX</div>
                         <div class="panel-body">
                             <canvas id="Canvas2" style="height: 165px; width: 100%;"></canvas>
                         </div>
@@ -266,7 +266,7 @@
             <div style="float: left; width: 69.2%;">
                 <div style="height: 290px; border: 1px solid #e6e6e6; background-color: #fff;">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><i class="fa fa-bar-chart fa-lg" style="padding-right: 5px;"></i>提案分类统计</div>
+                        <div class="panel-heading"><i class="fa fa-bar-chart fa-lg" style="padding-right: 5px;"></i>XXXXX</div>
                         <div class="panel-body">
                             <p  id="bar01" style="height: 250px; width: 100%;"></p>
                         </div>
@@ -276,14 +276,14 @@
             <div style="float: right; width: 30%;">
                 <div style="height: 290px; border: 1px solid #e6e6e6; background-color: #fff;">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><i class="fa fa-pie-chart fa-lg" style="padding-right: 5px;"></i>提案组成</div>
+                        <div class="panel-heading"><i class="fa fa-pie-chart fa-lg" style="padding-right: 5px;"></i>XXXXX</div>
                         <div class="panel-body">
                             <canvas id="Canvas1" style="height: 180px; width: 100%; margin-top: 10px;"></canvas>
                             <div style="text-align: center; padding-top: 15px;">
-                                <span><i class="fa fa-square" style="color: #F7464A; font-size: 20px; padding-right: 5px; vertical-align: middle; margin-top: -3px;"></i>个人提案</span>
-                                <span style="margin-left: 10px;"><i class="fa fa-square" style="color: #46BFBD; font-size: 20px; padding-right: 5px; vertical-align: middle; margin-top: -3px;"></i>民主党派提案</span>
-                                <span style="margin-left: 10px;"><i class="fa fa-square" style="color: #FDB45C; font-size: 20px; padding-right: 5px; vertical-align: middle; margin-top: -3px;"></i>人民团体提案</span>
-                                <span style="margin-left: 10px;"><i class="fa fa-square" style="color: #949FB1; font-size: 20px; padding-right: 5px; vertical-align: middle; margin-top: -3px;"></i>其它党派提案</span>
+                                <span><i class="fa fa-square" style="color: #F7464A; font-size: 20px; padding-right: 5px; vertical-align: middle; margin-top: -3px;"></i>XXXX</span>
+                                <span style="margin-left: 10px;"><i class="fa fa-square" style="color: #46BFBD; font-size: 20px; padding-right: 5px; vertical-align: middle; margin-top: -3px;"></i>XXXX</span>
+                                <span style="margin-left: 10px;"><i class="fa fa-square" style="color: #FDB45C; font-size: 20px; padding-right: 5px; vertical-align: middle; margin-top: -3px;"></i>XXXX</span>
+                                <span style="margin-left: 10px;"><i class="fa fa-square" style="color: #949FB1; font-size: 20px; padding-right: 5px; vertical-align: middle; margin-top: -3px;"></i>XXXX</span>
                             </div>
                         </div>
                     </div>

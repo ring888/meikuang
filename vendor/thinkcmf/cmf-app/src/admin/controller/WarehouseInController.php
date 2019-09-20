@@ -120,7 +120,7 @@ class WarehouseInController extends AdminBaseController
                     //id更新产品数量
                     $goods = Db::name('warehouse_goods')->where("id",$v)->find();
                     if(!empty($goods)){
-                        Db::name('warehouse_goods')->where("id",$v)->setDec("goods_nums",$data['num'][$k]);
+                        Db::name('warehouse_goods')->where("id",$v)->setInc("goods_nums",$data['num'][$k]);
 
                         $goods_order = [
                             'goods_id' => $v,
@@ -133,7 +133,7 @@ class WarehouseInController extends AdminBaseController
                         $this->error("提交失败");
                     }
                 }
-                $this->success("添加成功！", url("WarehouseEx/index"));
+                $this->success("添加成功！", url("WarehouseIn/index"));
             }
             else{
                 $this->error("提交失败");
@@ -383,7 +383,7 @@ class WarehouseInController extends AdminBaseController
         ->join('mk_warehouse_goods b', 'a.goods_id=b.id')
         ->join('mk_warehouse c', 'b.warehouse=c.id')
         ->where("a.order_id",$ids)
-        ->field('a.*,b.goods_name,b.goods_no,b.danwei,c.wh_name')
+        ->field('a.*,b.goods_name,b.goods_no,b.goods_type,b.danwei,c.wh_name')
         ->order("a.id asc")
         ->select();       
         $this->assign("order_goods",$order_goods);           

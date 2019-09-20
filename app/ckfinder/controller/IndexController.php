@@ -22,6 +22,7 @@ class IndexController extends AdminBaseController
      */
     public function index()
     {
+        
         $assign = ['ckfinder_url' => url('ckfinder')];
         $this->assign($assign);
         return $this->fetch(__DIR__ . '/../view/ckfinder.html');

@@ -49,7 +49,7 @@
                             <if condition="$tag egt 0">已过期<else/>未到期</if>
                         </td>
                     <td>
-                            <a class="btn btn-xs btn-primary" href="{:url('device_runhua/runhua_add',array('plan_id'=>$vo['id'],'id'=>$vo['device_id']))}">执行计划</a>
+                            <a class="btn btn-xs btn-primary" href="{:url('device_runhua/runhua_add',array('plan_id'=>$vo['id'],'id'=>$vo['device_id'],'tag'=>1))}">执行计划</a>
                         	<a class="btn btn-xs btn-info"
                                             href="javascript:parent.openIframeLayer('{:url('DeviceRunhuaPlan/plan_show',array('id'=>$vo['id']))}','详情',{area: ['70%', '80%']});"
                                             class="btn btn-secondary btn-sm btn-icon icon-left">

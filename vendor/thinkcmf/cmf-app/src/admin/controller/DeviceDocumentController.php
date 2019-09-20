@@ -36,19 +36,28 @@ class DeviceDocumentController extends AdminBaseController
     public function index(){
         $id                 = $this->request->param('id');
         $filter = $this->request->param();
+        $categoryIds = $this->request->param('category', 0, 'intval');
+        $portalCategoryModel = new PortalDeviceDocumentCategoryModel();
+        $categoryTree        = $portalCategoryModel->adminCategoryTree($categoryIds);
+        $this->assign("category_tree",$categoryTree);
         $list        = Db::table("mk_device_document")
                             ->alias("a")
+                            ->join('mk_portal_device_document_category b', 'a.document_type=b.id')
                             ->join('mk_device c', 'a.device_id=c.id')
+                            
             ->where(function (Query $query) use ($filter) {
 
-                
+                $category = empty($filter['category']) ? 0 : $filter['category'];
+                if(!empty($category)){
+                    $query->where('a.document_type',$category);
+                }
                 $startTime = empty($filter['start_time']) ? 0 : strtotime($filter['start_time']);
                 $endTime   = empty($filter['end_time']) ? 0 : strtotime($filter['end_time']);
                 if (!empty($startTime)) {
-                    $query->where('a.repair_time', '>=', $startTime);
+                    $query->where('a.create_time', '>=', $startTime);
                 }
                 if (!empty($endTime)) {
-                    $query->where('a.repair_time', '<=', $endTime);
+                    $query->where('a.create_time', '<=', $endTime);
                 }
 
                 $keyword = empty($filter['keyword']) ? '' : $filter['keyword'];
@@ -56,7 +65,7 @@ class DeviceDocumentController extends AdminBaseController
                     $query->where('c.device_name|a.document_name', 'like', "%$keyword%");
                 }
             })
-            ->field("a.*,c.device_name")
+            ->field("a.*,b.name as category_name,c.device_name")
             ->order('a.id', 'DESC')
             ->paginate(10);
 
@@ -65,6 +74,7 @@ class DeviceDocumentController extends AdminBaseController
         $page = $list->render();
         $this->assign("page",$page);
         $this->assign("list", $list);
+        $this->assign('category', $categoryIds);
         $this->assign('start_time', isset($filter['start_time']) ? $filter['start_time'] : '');
         $this->assign('end_time', isset($filter['end_time']) ? $filter['end_time'] : '');
         $this->assign('keyword', isset($filter['keyword']) ? $filter['keyword'] : '');
@@ -128,7 +138,10 @@ class DeviceDocumentController extends AdminBaseController
                         ->where("a.id",$id)
                         ->field('a.*,b.name')
                         ->order("a.id asc")
-                        ->find();    
+                        ->find();
+        $portalCategoryModel = new PortalDeviceDocumentCategoryModel();
+        $categoryTree        = $portalCategoryModel->adminCategoryTree();
+        $this->assign("category_tree",$categoryTree);
          $this->assign("info",$order_goods);     
         return $this->fetch();
     }
@@ -149,6 +162,7 @@ class DeviceDocumentController extends AdminBaseController
     {
         if ($this->request->isPost()) {
             $data      = $this->request->param();
+            $tag = $this->request->param('tag', 0, 'intval');
             $items = array();
             $linkModel = new DeviceDocumentModel();
             if(count($data['file_urls'])>1){ 
@@ -181,7 +195,13 @@ class DeviceDocumentController extends AdminBaseController
                 ];
                 $linkModel->allowField(true)->save($items);
             }
-            $this->success("添加成功！",url("DeviceDocument/document",array('id'=>$data['device_id'])));   
+            if($tag==0){
+                $this->success("添加成功！", url("DeviceDocument/document",array('id'=>$data['device_id'])));
+            }
+            else{
+                $this->success("添加成功！", url("DeviceDocument/index"));
+            }
+            //$this->success("添加成功！",url("DeviceDocument/document",array('id'=>$data['device_id'])));   
         }
     }
 
@@ -223,11 +243,14 @@ class DeviceDocumentController extends AdminBaseController
                         ->alias("a")
                         ->join('mk_device b', 'a.device_id=b.id')
                         ->join('mk_portal_device_category c', 'b.device_type=c.id')
-                        
+                        ->join('mk_portal_device_document_category d', 'a.document_type=d.id')
                         ->where("a.id",$id)
-                        ->field('a.*,b.device_name,c.name as category_name')
+                        ->field('a.*,b.device_name,c.name as category_name,d.name as document_category')
                         ->order("a.id asc")
-                        ->find();  
+                        ->find();
+                        $portalCategoryModel = new PortalDeviceDocumentCategoryModel();
+                        $categoryTree        = $portalCategoryModel->adminCategoryTree($order_goods['document_type']);
+                        $this->assign("category_tree",$categoryTree);  
          $this->assign("info",$order_goods);              
         return $this->fetch();
     }
@@ -248,7 +271,7 @@ class DeviceDocumentController extends AdminBaseController
     {
         if ($this->request->isPost()) {
             $data      = $this->request->param();
-
+            $tag = $this->request->param('tag', 0, 'intval');
             $items = array();
             $linkModel = new DeviceDocumentModel();
             $geshi = explode('.',$data['file_names'][0]);
@@ -265,7 +288,13 @@ class DeviceDocumentController extends AdminBaseController
             ];
             $linkModel->allowField(true)->isUpdate(true)->save($items);
     
-            $this->success("保存成功！",url("DeviceDocument/document",array('id'=>$data['device_id'])));
+           // $this->success("保存成功！",url("DeviceDocument/document",array('id'=>$data['device_id'])));
+           if($tag==0){
+            $this->success("保存成功！", url("DeviceDocument/document",array('id'=>$data['device_id'])));
+        }
+        else{
+            $this->success("保存成功！", url("DeviceDocument/index"));
+        }
         }
     }
 

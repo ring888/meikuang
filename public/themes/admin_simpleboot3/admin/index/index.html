@@ -268,12 +268,14 @@
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-shortcuts" id="sidebar-shortcuts">
-            <a class="btn btn-sm btn-warning" href="__ROOT__/"
-               title="{:lang('WEBSITE_HOME_PAGE')}"
-               target="_blank"
-               data-toggle="tooltip">
-                <i class="fa fa-home"></i>
-            </a>
+                <if condition="cmf_auth_check(cmf_get_current_admin_id(),'admin/main/index')">
+                    <a class="btn btn-sm btn-info"
+                       href="javascript:openapp('{:url('admin/main/index')}','mainindex','{:lang('WEBSITE_HOME_PAGE')}',true);"
+                       title="{:lang('WEBSITE_HOME_PAGE')}"
+                       data-toggle="tooltip">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </if>
             <!--
             <if condition="cmf_auth_check(cmf_get_current_admin_id(),'portal/AdminCategory/index')">
                 <a class="btn btn-sm btn-success" href="javascript:openapp('{:url('portal/AdminCategory/index')}','index_termlist','文章分类管理');" title="文章分类管理">

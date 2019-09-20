@@ -1,0 +1,59 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+        <div class="panel panel-default">
+                <div class="panel-heading">预警记录</div>
+                <div class="panel-body">
+        <table class="table table-hover table-bordered table-list">
+            <thead>
+            <tr>
+
+                <th width="50">ID</th>
+                
+                <th>设备名称</th>
+               
+                <th>检修部位</th>
+                <th>检修负责人</th>
+                <th>上次检修时间</th>
+                <th>检修周期（日）</th>
+                <th>状态</th>
+                <th >{:lang('ACTIONS')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <foreach name="list" item="vo">
+                    <php>
+                            $time = time();
+                            $day = ($time - $vo['last_repair_time'])/86400;
+                            $tag = $day-$vo['period_count'];
+                            
+                    </php>
+                <tr <if condition="$tag egt 0">style="background-color:gray"</if> >
+   
+                    <td>{$vo.id}</td>
+                    <td>{$vo.device_name}</td>
+                   
+                    
+                    <td>{$vo.repair_part}</td>
+                    <td>{$vo.repair_worker}</td>
+                    <td> {:date('Y-m-d H:i',$vo['last_repair_time'])}</td> 
+                    <td>{$vo.period_count} </td>
+                    <td>
+                            <if condition="$tag egt 0">已过期<else/>未到期</if>
+                        </td>
+                    <td>
+                            <a class="btn btn-xs btn-primary" href="{:url('device_repair/repair_add',array('plan_id'=>$vo['id'],'id'=>$vo['device_id'],'tag'=>1))}">执行计划</a>
+
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
+        <div class="pagination">{$page}</div>
+        </div>
+        </div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

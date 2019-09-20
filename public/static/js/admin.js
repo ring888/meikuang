@@ -656,6 +656,27 @@
         });
     }
 
+     // bootstrap时间选择器
+     var bootstrapDTimeInput = $("input.js-bootstrap-time");
+     if (bootstrapDTimeInput.length) {
+         Wind.css('bootstrapDatetimePicker');
+         Wind.use('bootstrapDatetimePicker', function () {
+            bootstrapDTimeInput.datetimepicker({
+                format: 'hh:ii',
+                 language: 'zh-CN',
+                 weekStart: 1,
+                 todayBtn:  1,
+                 autoclose: 1,
+                 todayHighlight: 1,
+                 startView: 1,
+                 minView: 0,
+                 maxView: 1,
+                 forceParse: 0
+              
+             });
+         });
+     }
+
     //tab
     var tabs_nav = $('ul.js-tabs-nav');
     if (tabs_nav.length) {

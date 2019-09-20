@@ -89,7 +89,13 @@
 	<script src="__STATIC__/js/admin.js"></script>
 	<script type="text/javascript">
 	function save(id){
-		$("#tijiao").attr("disabled","disabled");
+		var tag = {$tag};
+		if(tag==1)
+		{
+			window.location.href = "javascript:history.back(-1)";
+		}
+		else{
+			$("#tijiao").attr("disabled","disabled");
      let time1 = setInterval(function(){
 　　　　　　　　　　//父级弹框关闭
                 parent.layer.closeAll(); 
@@ -97,6 +103,9 @@
 $(window.parent.document).find("iframe[name='maintain_frame']").attr("src",'/admin/device_maintain/maintain/id/'+id);
             },500);
  }
+		}
+
+
 
 </script>
 </body>
