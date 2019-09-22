@@ -1,0 +1,638 @@
+<include file="public@header" />
+<style type="text/css">
+	th {
+		text-align: center;
+		font-weight: normal;
+	}
+</style>
+</head>
+
+<body>
+	<div class="wrap">
+		<div class="panel panel-default">
+			<div class="panel-heading">日报记录</div>
+			<div class="panel-body">
+				<ul class="nav nav-tabs">
+					<li><a href="{:url('analysis_ribao/index')}">记录列表</a></li>
+					<li class="active"><a href="#">更新记录</a></li>
+				</ul>
+				<form method="post" class="form-horizontal js-ajax-form margin-top-20"
+					action="{:url('analysis_ribao/editPost')}">
+					<div class="form-group">
+						<label for="input-creater" class="col-sm-1 control-label">日期<span
+								class="form-">*</span></label>
+						<div class="col-md-6 col-sm-10">
+							<input  type="text" class="form-control js-bootstrap-date" name="record_date"
+								value="{:date('Y-m-d',$info['record_date'])}" autocomplete="off" readonly />
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label for="input-gys" class="col-sm-1 control-label">地面<span
+								class="form-">*</span></label>
+						<div class="col-md-10 col-sm-10">
+							<table class="table table-striped table-bordered table-hover dataTable no-footer">
+								<thead>
+									<tr role="row">
+										<th rowspan="2"></th>
+
+										<th class="sorting_disabled" rowspan="2" style="text-align:center;">
+											煤样名称
+										</th>
+										<th class="sorting_disabled" rowspan="2" style="text-align:center;">
+											化验批次
+										</th>
+										<th class="sorting_disabled" rowspan="2" style="text-align:center;">
+											采样地点
+										</th>
+										<th class="sorting_disabled" colspan="7" style="text-align:center;">分析结果</th>
+										<th class="sorting_disabled" colspan="1" style="text-align:center;">
+											备注
+										</th>
+										<th rowspan="2"></th>
+									</tr>
+									<tr>
+										<th style="text-align:center;">全水Mt(%)</th>
+										<th style="text-align:center;">内水Mad(%)</th>
+										<th style="text-align:center;">灰分Ad(%)</th>
+										<th style="text-align:center;">挥发分Vdaf(%)</th>
+										<th style="text-align:center;">全硫St.d(%)</th>
+										<th style="text-align:center;">高位热值Qgr.ar(kcal/kg)</th>
+										<th style="text-align:center;">低位热值Qnet.ar(kcal/kg)</th>
+										<th style="text-align:center;">煤质指标</th>
+
+									</tr>
+								</thead>
+								<tbody>
+									<empty name="info['ground_more']">
+											<tr role="row" class="odd order-list">
+													<td>
+														<a href="javascript:void(0);" onclick="add_list(this)"> 增加 </a>
+													</td>
+			
+													<td>
+														<input type="text"  class="form-control" value=""
+															name="ground_more[coal_name][]">
+													</td>
+													<td><input type="text"  class="form-control" value=""
+															name="ground_more[pici][]"></td>
+													<td><input type="text"  class="form-control" value=""
+															name="ground_more[place][]"></td>
+													<td><input type="text"  class="form-control" value=""
+															name="ground_more[mt][]"></td>
+													<td><input type="text"  class="form-control" value=""
+															name="ground_more[mad][]"></td>
+													<td><input type="text"  class="form-control" value=""
+															name="ground_more[ad][]"></td>
+													<td><input type="text"  class="form-control" value=""
+															name="ground_more[vdaf][]"></td>
+													<td><input type="text"  class="form-control" value=""
+															name="ground_more[st][]"></td>
+													<td><input type="text"  class="form-control" value=""
+															name="ground_more[qgr][]"></td>
+													<td><input type="text"  class="form-control" value=""
+															name="ground_more[qnet][]"></td>
+													<td><input type="text"  class="form-control" value=""
+															name="ground_more[remarks][]"></td>
+													<td>
+														<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> 删除</a>
+													</td>
+												</tr>
+											
+											<else />
+											<foreach name="info['ground_more']['coal_name']" item="v" key="k">
+													<tr role="row" class="odd order-list">
+														<td>
+															<a href="javascript:void(0);" onclick="add_list(this)"> 增加 </a>
+														</td>
+				
+														<td>
+															<input type="text"  class="form-control" value="{$info['ground_more']['coal_name'][$k]}"
+																name="ground_more[coal_name][]">
+														</td>
+														<td><input type="text"  class="form-control" value="{$info['ground_more']['pici'][$k]}"
+																name="ground_more[pici][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['ground_more']['place'][$k]}"
+																name="ground_more[place][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['ground_more']['mt'][$k]}"
+																name="ground_more[mt][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['ground_more']['mad'][$k]}"
+																name="ground_more[mad][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['ground_more']['ad'][$k]}"
+																name="ground_more[ad][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['ground_more']['vdaf'][$k]}"
+																name="ground_more[vdaf][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['ground_more']['st'][$k]}"
+																name="ground_more[st][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['ground_more']['qgr'][$k]}"
+																name="ground_more[qgr][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['ground_more']['qnet'][$k]}"
+																name="ground_more[qnet][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['ground_more']['remarks'][$k]}"
+																name="ground_more[remarks][]"></td>
+														<td>
+															<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> 删除</a>
+														</td>
+													</tr>
+													</foreach>
+
+									</empty>
+										
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+					<div class="form-group">
+						<label for="input-gys" class="col-sm-1 control-label">商品煤<span
+								class="form-">*</span></label>
+						<div class="col-md-10 col-sm-10">
+							<table class="table table-striped table-bordered table-hover dataTable no-footer">
+								<thead>
+									<tr role="row">
+										<th rowspan="2"></th>
+
+										<th class="sorting_disabled" rowspan="2" style="text-align:center;">
+											煤样名称
+										</th>
+										<th class="sorting_disabled" rowspan="2" style="text-align:center;">
+											化验批次
+										</th>
+										<th class="sorting_disabled" rowspan="2" style="text-align:center;">
+											采样地点
+										</th>
+										<th class="sorting_disabled" colspan="7" style="text-align:center;">分析结果</th>
+										<th class="sorting_disabled" colspan="1" style="text-align:center;">
+											备注
+										</th>
+										<th rowspan="2"></th>
+									</tr>
+									<tr>
+										<th>全水Mt(%)</th>
+										<th>内水Mad(%)</th>
+										<th>灰分Ad(%)</th>
+										<th>挥发分Vdaf(%)</th>
+										<th>全硫St.d(%)</th>
+										<th>高位热值Qgr.ar(kcal/kg)</th>
+										<th>低位热值Qnet.ar(kcal/kg)</th>
+										<th>煤质指标</th>
+
+									</tr>
+								</thead>
+								<tbody>
+										<empty name="info['coal_more']">
+												<tr role="row" class="odd order-list">
+														<td>
+															<a href="javascript:void(0);" onclick="add_list(this)"> 增加 </a>
+														</td>
+				
+														<td>
+															<input type="text"  class="form-control" value=""
+																name="coal_more[coal_name][]">
+														</td>
+														<td><input type="text"  class="form-control" value=""
+																name="coal_more[pici][]"></td>
+														<td><input type="text"  class="form-control" value=""
+																name="coal_more[place][]"></td>
+														<td><input type="text"  class="form-control" value=""
+																name="coal_more[mt][]"></td>
+														<td><input type="text"  class="form-control" value=""
+																name="coal_more[mad][]"></td>
+														<td><input type="text"  class="form-control" value=""
+																name="coal_more[ad][]"></td>
+														<td><input type="text"  class="form-control" value=""
+																name="coal_more[vdaf][]"></td>
+														<td><input type="text"  class="form-control" value=""
+																name="coal_more[st][]"></td>
+														<td><input type="text"  class="form-control" value=""
+																name="coal_more[qgr][]"></td>
+														<td><input type="text"  class="form-control" value=""
+																name="coal_more[qnet][]"></td>
+														<td><input type="text"  class="form-control" value=""
+																name="coal_more[remarks][]"></td>
+														<td>
+															<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> 删除</a>
+														</td>
+													</tr>
+											<else />
+
+											<foreach name="info['coal_more']['coal_name']" item="v" key="k">
+													<tr role="row" class="odd order-list">
+														<td>
+															<a href="javascript:void(0);" onclick="add_list(this)"> 增加 </a>
+														</td>
+				
+														<td>
+															<input type="text"  class="form-control" value="{$info['coal_more']['coal_name'][$k]}"
+																name="coal_more[coal_name][]">
+														</td>
+														<td><input type="text"  class="form-control" value="{$info['coal_more']['pici'][$k]}"
+																name="coal_more[pici][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['coal_more']['place'][$k]}"
+																name="coal_more[place][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['coal_more']['mt'][$k]}"
+																name="coal_more[mt][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['coal_more']['mad'][$k]}"
+																name="coal_more[mad][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['coal_more']['ad'][$k]}"
+																name="coal_more[ad][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['coal_more']['vdaf'][$k]}"
+																name="coal_more[vdaf][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['coal_more']['st'][$k]}"
+																name="coal_more[st][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['coal_more']['qgr'][$k]}"
+																name="coal_more[qgr][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['coal_more']['qnet'][$k]}"
+																name="coal_more[qnet][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['coal_more']['remarks'][$k]}"
+																name="coal_more[remarks][]"></td>
+														<td>
+															<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> 删除</a>
+														</td>
+													</tr>
+													</foreach>
+										</empty>
+										
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+					<div class="form-group">
+						<label for="input-gys" class="col-sm-1 control-label">井下<span
+								class="form-">*</span></label>
+						<div class="col-md-10 col-sm-10">
+							<table class="table table-striped table-bordered table-hover dataTable no-footer">
+								<thead>
+									<tr role="row">
+										<th rowspan="2"></th>
+
+										<th class="sorting_disabled" rowspan="2" style="text-align:center;">
+											煤样名称
+										</th>
+										<th class="sorting_disabled" rowspan="2" style="text-align:center;">
+											化验批次
+										</th>
+										<th class="sorting_disabled" rowspan="2" style="text-align:center;">
+											采样地点
+										</th>
+										<th class="sorting_disabled" colspan="7" style="text-align:center;">分析结果</th>
+										<th class="sorting_disabled" colspan="1" style="text-align:center;">
+											备注
+										</th>
+										<th rowspan="2"></th>
+									</tr>
+									<tr>
+										<th>全水Mt(%)</th>
+										<th>内水Mad(%)</th>
+										<th>灰分Ad(%)</th>
+										<th>挥发分Vdaf(%)</th>
+										<th>全硫St.d(%)</th>
+										<th>高位热值Qgr.ar(kcal/kg)</th>
+										<th>低位热值Qnet.ar(kcal/kg)</th>
+										<th>煤质指标</th>
+
+									</tr>
+								</thead>
+								<tbody>
+										<empty name="info['under_more']">
+												<tr role="row" class="odd order-list">
+														<td>
+															<a href="javascript:void(0);" onclick="add_list(this)"> 增加 </a>
+														</td>
+				
+														<td>
+															<input type="text"  class="form-control" value=""
+																name="under_more[coal_name][]">
+														</td>
+														<td><input type="text"  class="form-control" value=""
+																name="under_more[pici][]"></td>
+														<td><input type="text"  class="form-control" value=""
+																name="under_more[place][]"></td>
+														<td><input type="text"  class="form-control" value=""
+																name="under_more[mt][]"></td>
+														<td><input type="text"  class="form-control" value=""
+																name="under_more[mad][]"></td>
+														<td><input type="text"  class="form-control" value=""
+																name="under_more[ad][]"></td>
+														<td><input type="text"  class="form-control" value=""
+																name="under_more[vdaf][]"></td>
+														<td><input type="text"  class="form-control" value=""
+																name="under_more[st][]"></td>
+														<td><input type="text"  class="form-control" value=""
+																name="under_more[qgr][]"></td>
+														<td><input type="text"  class="form-control" value=""
+																name="under_more[qnet][]"></td>
+														<td><input type="text"  class="form-control" value=""
+																name="under_more[remarks][]"></td>
+														<td>
+															<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> 删除</a>
+														</td>
+													</tr>
+											<else />
+											<foreach name="info['under_more']['coal_name']" item="v" key="k">
+													<tr role="row" class="odd order-list">
+														<td>
+															<a href="javascript:void(0);" onclick="add_list(this)"> 增加 </a>
+														</td>
+				
+														<td>
+															<input type="text"  class="form-control" value="{$info['under_more']['coal_name'][$k]}"
+																name="under_more[coal_name][]">
+														</td>
+														<td><input type="text"  class="form-control" value="{$info['under_more']['pici'][$k]}"
+																name="under_more[pici][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['under_more']['place'][$k]}"
+																name="under_more[place][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['under_more']['mt'][$k]}"
+																name="under_more[mt][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['under_more']['mad'][$k]}"
+																name="under_more[mad][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['under_more']['ad'][$k]}"
+																name="under_more[ad][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['under_more']['vdaf'][$k]}"
+																name="under_more[vdaf][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['under_more']['st'][$k]}"
+																name="under_more[st][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['under_more']['qgr'][$k]}"
+																name="under_more[qgr][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['under_more']['qnet'][$k]}"
+																name="under_more[qnet][]"></td>
+														<td><input type="text"  class="form-control" value="{$info['under_more']['remarks'][$k]}"
+																name="under_more[remarks][]"></td>
+														<td>
+															<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> 删除</a>
+														</td>
+													</tr>
+													</foreach>
+										</empty>
+										
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+					<div class="form-group">
+						<label for="input-gys" class="col-sm-1 control-label">选煤厂(4点班)<span
+								class="form-">*</span></label>
+						<div class="col-md-10 col-sm-10">
+							<table class="table table-striped table-bordered table-hover dataTable no-footer">
+								<thead>
+									<tr role="row">
+										<th rowspan="2"></th>
+
+										<th class="sorting_disabled" rowspan="2" style="text-align:center;">
+											煤种及采样地点
+										</th>
+
+
+										<th class="sorting_disabled" colspan="2" style="text-align:center;">分析结果</th>
+
+										<th rowspan="2"></th>
+									</tr>
+									<tr>
+										<th>全水Mt(%)</th>
+										<th>灰分Ad(%)</th>
+
+									</tr>
+								</thead>
+								<tbody>
+										<empty name="info['four_classes_more']">
+												<tr role="row" class="odd order-list">
+														<td>
+															<a href="javascript:void(0);" onclick="add_list(this)"> 增加 </a>
+														</td>
+				
+														<td>
+															<input type="text"  class="form-control" value=""
+																name="four_classes_more[coal_name][]">
+														</td>
+				
+														<td><input type="text"  class="form-control" value=""
+																name="four_classes_more[mt][]"></td>
+				
+														<td><input type="text"  class="form-control" value=""
+																name="four_classes_more[ad][]"></td>
+				
+														<td>
+															<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> 删除</a>
+														</td>
+													</tr>
+											<else />
+											<foreach name="info['four_classes_more']['coal_name']" item="v" key="k">
+													<tr role="row" class="odd order-list">
+														<td>
+															<a href="javascript:void(0);" onclick="add_list(this)"> 增加 </a>
+														</td>
+				
+														<td>
+															<input type="text"  class="form-control" value="{$info['four_classes_more']['coal_name'][$k]}"
+																name="four_classes_more[coal_name][]">
+														</td>
+				
+														<td><input type="text"  class="form-control" value="{$info['four_classes_more']['mt'][$k]}"
+																name="four_classes_more[mt][]"></td>
+				
+														<td><input type="text"  class="form-control" value="{$info['four_classes_more']['ad'][$k]}"
+																name="four_classes_more[ad][]"></td>
+				
+														<td>
+															<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> 删除</a>
+														</td>
+													</tr>
+													</foreach>
+										</empty>
+										
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+
+					<div class="form-group">
+						<label for="input-gys" class="col-sm-1 control-label">选煤厂(0点班)<span
+								class="form-">*</span></label>
+						<div class="col-md-10 col-sm-10">
+							<table class="table table-striped table-bordered table-hover dataTable no-footer">
+								<thead>
+									<tr role="row">
+										<th rowspan="2"></th>
+
+										<th class="sorting_disabled" rowspan="2" style="text-align:center;">
+											煤种及采样地点
+										</th>
+
+
+										<th class="sorting_disabled" colspan="2" style="text-align:center;">分析结果</th>
+
+										<th rowspan="2"></th>
+									</tr>
+									<tr>
+										<th>全水Mt(%)</th>
+										<th>灰分Ad(%)</th>
+
+									</tr>
+								</thead>
+								<tbody>
+										<empty name="info['zero_classes_more']">
+												<tr role="row" class="odd order-list">
+														<td>
+															<a href="javascript:void(0);" onclick="add_list(this)"> 增加 </a>
+														</td>
+				
+														<td>
+															<input type="text"  class="form-control" value=""
+																name="zero_classes_more[coal_name][]">
+														</td>
+				
+														<td><input type="text"  class="form-control" value=""
+																name="zero_classes_more[mt][]"></td>
+				
+														<td><input type="text"  class="form-control" value=""
+																name="zero_classes_more[ad][]"></td>
+				
+														<td>
+															<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> 删除</a>
+														</td>
+													</tr>
+											<else />
+											<foreach name="info['zero_classes_more']['coal_name']" item="v" key="k">
+													<tr role="row" class="odd order-list">
+														<td>
+															<a href="javascript:void(0);" onclick="add_list(this)"> 增加 </a>
+														</td>
+				
+														<td>
+															<input type="text"  class="form-control" value="{$info['zero_classes_more']['coal_name'][$k]}"
+																name="zero_classes_more[coal_name][]">
+														</td>
+				
+														<td><input type="text"  class="form-control" value="{$info['zero_classes_more']['mt'][$k]}"
+																name="zero_classes_more[mt][]"></td>
+				
+														<td><input type="text"  class="form-control" value="{$info['zero_classes_more']['ad'][$k]}"
+																name="zero_classes_more[ad][]"></td>
+				
+														<td>
+															<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> 删除</a>
+														</td>
+													</tr>
+													</foreach>
+										</empty>
+										
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+					<div class="form-group">
+						<label for="input-gys" class="col-sm-1 control-label">选煤厂(8点班)<span
+								class="form-">*</span></label>
+						<div class="col-md-10 col-sm-10">
+							<table class="table table-striped table-bordered table-hover dataTable no-footer">
+								<thead>
+									<tr role="row">
+										<th rowspan="2"></th>
+
+										<th class="sorting_disabled" rowspan="2" style="text-align:center;">
+											煤种及采样地点
+										</th>
+
+
+										<th class="sorting_disabled" colspan="2" style="text-align:center;">分析结果</th>
+
+										<th rowspan="2"></th>
+									</tr>
+									<tr>
+										<th>全水Mt(%)</th>
+										<th>灰分Ad(%)</th>
+
+									</tr>
+								</thead>
+								<tbody>
+										<empty name="info['eight_classes_more']">
+												<tr role="row" class="odd order-list">
+														<td>
+															<a href="javascript:void(0);" onclick="add_list(this)"> 增加 </a>
+														</td>
+				
+														<td>
+															<input type="text"  class="form-control" value=""
+																name="eight_classes_more[coal_name][]">
+														</td>
+				
+														<td><input type="text"  class="form-control" value=""
+																name="eight_classes_more[mt][]"></td>
+				
+														<td><input type="text"  class="form-control" value=""
+																name="eight_classes_more[ad][]"></td>
+				
+														<td>
+															<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> 删除</a>
+														</td>
+													</tr>
+											<else />
+											<foreach name="info['eight_classes_more']['coal_name']" item="v" key="k">
+													<tr role="row" class="odd order-list">
+														<td>
+															<a href="javascript:void(0);" onclick="add_list(this)"> 增加 </a>
+														</td>
+				
+														<td>
+															<input type="text"  class="form-control" value="{$info['eight_classes_more']['coal_name'][$k]}"
+																name="eight_classes_more[coal_name][]">
+														</td>
+				
+														<td><input type="text"  class="form-control" value="{$info['eight_classes_more']['mt'][$k]}"
+																name="eight_classes_more[mt][]"></td>
+				
+														<td><input type="text"  class="form-control" value="{$info['eight_classes_more']['ad'][$k]}"
+																name="eight_classes_more[ad][]"></td>
+				
+														<td>
+															<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> 删除</a>
+														</td>
+													</tr>
+												</foreach>
+										</empty>
+										
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<input type="hidden" name="id" value="{$info['id']}" />
+							<button id="tijiao" type="submit" class="btn btn-primary js-ajax-submit">更新</button>
+							<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+	<script>
+
+		function add_list(obj) {
+			$(obj).parent().parent().clone().appendTo($(obj).parent().parent().parent());
+		}
+
+		function del_list(obj) {
+			if ($(obj).parent().parent().siblings().size() == 0) {
+				artdialogAlert("再删就没了！");
+			}
+			else {
+				$(obj).parent().parent().remove();
+			}
+
+		}
+
+	</script>
+</body>
+
+</html>

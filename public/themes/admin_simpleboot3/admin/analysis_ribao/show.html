@@ -1,0 +1,428 @@
+<include file="public@header" />
+<style type="text/css">
+	th {
+		text-align: center;
+		font-weight: 500;
+	}
+
+	td {
+		text-align: center;
+		height: 30px;
+	}
+</style>
+</head>
+
+<body>
+	<div class="wrap">
+
+
+
+		<div style="text-align: center;">
+			<h3 style="font-weight: bolder;">潞安集团古城煤矿煤质日报表</h3>
+
+		</div>
+
+
+		<div>
+
+			<div>
+				日期：{:date('Y-m-d',$info['record_date'])}
+				<table class="table  table-bordered table-hover dataTable no-footer">
+					<thead>
+						<tr role="row">
+
+							<th class="sorting_disabled" colspan="2" rowspan="2" style="text-align:center;">
+								煤样名称
+							</th>
+							<th class="sorting_disabled" rowspan="2" style="text-align:center;">
+								化验批次
+							</th>
+							<th class="sorting_disabled" rowspan="2" style="text-align:center;">
+								采样地点
+							</th>
+							<th class="sorting_disabled" colspan="7" style="text-align:center;">分析结果</th>
+							<th class="sorting_disabled" colspan="1" style="text-align:center;">
+								备注
+							</th>
+
+						</tr>
+						<tr>
+							<th style="text-align:center;">全水Mt(%)</th>
+							<th style="text-align:center;">内水Mad(%)</th>
+							<th style="text-align:center;">灰分Ad(%)</th>
+							<th style="text-align:center;">挥发分Vdaf(%)</th>
+							<th style="text-align:center;">全硫St.d(%)</th>
+							<th style="text-align:center;">高位热值Qgr.ar(kcal/kg)</th>
+							<th style="text-align:center;">低位热值Qnet.ar(kcal/kg)</th>
+							<th style="text-align:center;">煤质指标</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<empty name="info['ground_more']">
+							<tr role="row" class="odd order-list">
+
+								<td rowspan="1">地面</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+
+								<td rowspan="{$total}"></td>
+
+							</tr>
+
+							<else />
+
+							<foreach name="info['ground_more']['coal_name']" item="v" key="k">
+								<tr role="row" class="odd order-list">
+									<if condition="$k eq 0">
+										<td rowspan="{$ground_more_count}">地面</td>
+									</if>
+									<td>{$info['ground_more']['coal_name'][$k]}</td>
+									<td>{$info['ground_more']['pici'][$k]}</td>
+									<td>{$info['ground_more']['place'][$k]}</td>
+									<td>{$info['ground_more']['mt'][$k]}</td>
+									<td>{$info['ground_more']['mad'][$k]}</td>
+									<td>{$info['ground_more']['ad'][$k]}</td>
+									<td>{$info['ground_more']['vdaf'][$k]}</td>
+									<td>{$info['ground_more']['st'][$k]}</td>
+									<td>{$info['ground_more']['qgr'][$k]}</td>
+									<td>{$info['ground_more']['qnet'][$k]}</td>
+									<if condition="$k eq 0">
+										<td rowspan="{$total}">{$info['ground_more']['remarks'][$k]}</td>
+									</if>
+								</tr>
+							</foreach>
+
+						</empty>
+
+
+						<empty name="info['coal_more']">
+							<tr role="row" class="odd order-list">
+
+								<td>商品煤</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+
+
+							</tr>
+							<else />
+
+							<foreach name="info['coal_more']['coal_name']" item="v" key="k">
+								<tr role="row" class="odd order-list">
+									<if condition="$k eq 0">
+										<td rowspan="{$coal_more_count}">商品煤</td>
+									</if>
+									<td>{$info['coal_more']['coal_name'][$k]}</td>
+									<td>{$info['coal_more']['pici'][$k]}</td>
+									<td>{$info['coal_more']['place'][$k]}</td>
+									<td>{$info['coal_more']['mt'][$k]}</td>
+									<td>{$info['coal_more']['mad'][$k]}</td>
+									<td>{$info['coal_more']['ad'][$k]}</td>
+									<td>{$info['coal_more']['vdaf'][$k]}</td>
+									<td>{$info['coal_more']['st'][$k]}</td>
+									<td>{$info['coal_more']['qgr'][$k]}</td>
+									<td>{$info['coal_more']['qnet'][$k]}</td>
+
+
+								</tr>
+							</foreach>
+						</empty>
+
+						<empty name="info['under_more']">
+							<tr role="row" class="odd order-list">
+								<td>井下</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+
+
+							</tr>
+							<else />
+							<foreach name="info['under_more']['coal_name']" item="v" key="k">
+								<tr role="row" class="odd order-list">
+
+									<if condition="$k eq 0">
+										<td rowspan="{$under_more_count}">井下</td>
+									</if>
+									<td>{$info['under_more']['coal_name'][$k]}</td>
+									<td>{$info['under_more']['pici'][$k]}</td>
+									<td>{$info['under_more']['place'][$k]}</td>
+									<td>{$info['under_more']['mt'][$k]}</td>
+									<td>{$info['under_more']['mad'][$k]}</td>
+									<td>{$info['under_more']['ad'][$k]}</td>
+									<td>{$info['under_more']['vdaf'][$k]}</td>
+									<td>{$info['under_more']['st'][$k]}</td>
+									<td>{$info['under_more']['qgr'][$k]}</td>
+									<td>{$info['under_more']['qnet'][$k]}</td>
+
+
+								</tr>
+							</foreach>
+						</empty>
+						<tr>
+							<td colspan="12">洗煤厂</td>
+						</tr>
+						<tr>
+							<td colspan="12" style="padding:0;">
+								<table  style="width:100%;height:100%;border-spacing: 0;margin: 0;">
+									<tr>
+										<td>
+											<table class="table  table-bordered table-hover dataTable no-footer" style="width:100%;height:100%;margin:0;">
+												<thead>
+													<tr role="row">
+
+														<th class="sorting_disabled" rowspan="2">
+															时间
+														</th>
+														<th class="sorting_disabled" rowspan="2">
+															煤种及采样地点
+														</th>
+														<th class="sorting_disabled" colspan="2">
+															分析结果
+														</th>
+
+													</tr>
+													<tr>
+														<th style="text-align:center;">全水Mt(%)</th>
+
+														<th style="text-align:center;">灰分Ad(%)</th>
+
+
+													</tr>
+												</thead>
+												<tbody>
+													<empty name="info['four_classes_more']['coal_name']">
+														<tr role="row" class="odd order-list">
+															<td rowspan="{$max}">四点班</td>
+															<td></td>
+															<td></td>
+															<td></td>
+														</tr>
+														<if condition="$max gt 1">
+
+															<for start="1" end="$max">
+																<tr role="row" class="odd order-list">
+
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																</tr>
+															</for>
+														</if>
+
+														<else />
+														<foreach name="info['four_classes_more']['coal_name']" item="v"
+															key="k">
+															<tr role="row" class="odd order-list">
+																<if condition="$k eq 0">
+																		<td rowspan="{$max}">四点班</td>
+																</if>
+																	
+																<td>{$info['four_classes_more']['coal_name'][$k]}</td>
+																<td>{$info['four_classes_more']['mt'][$k]}</td>
+																<td>{$info['four_classes_more']['ad'][$k]}</td>
+
+															</tr>
+
+														</foreach>
+														<if condition="$four_classes_more_count neq $max">
+															<for start="0" end="$max-$four_classes_more_count">
+																<tr role="row" class="odd order-list">
+
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																</tr>
+															</for>
+														</if>
+													</empty>
+												</tbody>
+											</table>
+										</td>
+										<td>
+											<table class="table  table-bordered table-hover dataTable no-footer" style="width:100%;height:100%;margin:0;">
+												<thead>
+													<tr role="row">
+
+														<th class="sorting_disabled" rowspan="2">
+															时间
+														</th>
+														<th class="sorting_disabled" rowspan="2">
+															煤种及采样地点
+														</th>
+														<th class="sorting_disabled" colspan="2">
+															分析结果
+														</th>
+
+													</tr>
+													<tr>
+														<th style="text-align:center;">全水Mt(%)</th>
+
+														<th style="text-align:center;">灰分Ad(%)</th>
+
+
+													</tr>
+												</thead>
+												<tbody>
+													<empty name="info['zero_classes_more']['coal_name']">
+														<tr role="row" class="odd order-list">
+															<td rowspan="{$max}">零点班</td>
+															<td></td>
+															<td></td>
+															<td></td>
+														</tr>
+														<if condition="$max gt 1">
+
+															<for start="1" end="$max">
+																<tr role="row" class="odd order-list">
+
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																</tr>
+															</for>
+														</if>
+
+														<else />
+														<foreach name="info['zero_classes_more']['coal_name']" item="v"
+															key="k">
+															<tr role="row" class="odd order-list">
+																	<if condition="$k eq 0">
+																			<td rowspan="{$max}">零点班</td>
+																	</if>
+																<td>{$info['zero_classes_more']['coal_name'][$k]}</td>
+																<td>{$info['zero_classes_more']['mt'][$k]}</td>
+																<td>{$info['zero_classes_more']['ad'][$k]}</td>
+
+															</tr>
+
+														</foreach>
+														<if condition="$zero_classes_more_count neq $max">
+															<for start="0" end="$max-$zero_classes_more_count">
+																<tr role="row" class="odd order-list">
+
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																</tr>
+															</for>
+														</if>
+													</empty>
+												</tbody>
+											</table>
+										</td>
+										<td>
+											<table class="table table-bordered  table-hover dataTable no-footer" style="width:100%;height:100%;margin:0;">
+												<thead>
+													<tr role="row">
+
+														<th class="sorting_disabled" rowspan="2">
+															时间
+														</th>
+														<th class="sorting_disabled" rowspan="2">
+															煤种及采样地点
+														</th>
+														<th class="sorting_disabled" colspan="2">
+															分析结果
+														</th>
+
+													</tr>
+													<tr>
+														<th style="text-align:center;">全水Mt(%)</th>
+
+														<th style="text-align:center;">灰分Ad(%)</th>
+
+
+													</tr>
+												</thead>
+												<tbody>
+													<empty name="info['eight_classes_more']['coal_name']">
+														<tr role="row" class="odd order-list">
+															<td rowspan="{$max}">八点班</td>
+															<td></td>
+															<td></td>
+															<td></td>
+														</tr>
+														<if condition="$max gt 1">
+
+															<for start="1" end="$max">
+																<tr role="row" class="odd order-list">
+
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																</tr>
+															</for>
+														</if>
+
+														<else />
+														<foreach name="info['eight_classes_more']['coal_name']" item="v"
+															key="k">
+															<tr role="row" class="odd order-list">
+																	<if condition="$k eq 0">
+																			<td rowspan="{$max}">八点班</td>
+																	</if>
+																<td>{$info['eight_classes_more']['coal_name'][$k]}</td>
+																<td>{$info['eight_classes_more']['mt'][$k]}</td>
+																<td>{$info['eight_classes_more']['ad'][$k]}</td>
+
+															</tr>
+
+														</foreach>
+														<if condition="$eight_classes_more_count neq $max">
+															<for start="0" end="$max-$eight_classes_more_count">
+																<tr role="row" class="odd order-list">
+
+																	<td></td>
+																	<td></td>
+																	<td></td>
+																</tr>
+															</for>
+														</if>
+													</empty>
+												</tbody>
+											</table>
+
+										</td>
+									</tr>
+								</table>
+
+
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div><p style="width:33.3%;float: left;">分管领导：</p><p style="width:33.3%;float: left;">审核：</p><p style="width:33.3%;float: left;">制表：</p></div>
+				
+			</div>
+
+		</div>
+
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+
+</html>

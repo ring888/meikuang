@@ -4,13 +4,13 @@
 <body>
 	<div class="wrap">
 			<div class="panel panel-default">
-					<div class="panel-heading">喷吹煤快灰记录</div>
+					<div class="panel-heading">密度记录</div>
 					<div class="panel-body">
 							<ul class="nav nav-tabs">
-									<li ><a href="{:url('analysis_penchui/index')}">记录列表</a></li>
+									<li ><a href="{:url('analysis_midu/index')}">记录列表</a></li>
 									<li class="active"><a href="#">更新记录</a></li>
 								</ul>
-		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('analysis_penchui/editPost')}">
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('analysis_midu/editPost')}">
 			<div class="form-group">
 					<label for="input-creater" class="col-sm-2 control-label">日期<span
 							class="form-required">*</span></label>
@@ -32,35 +32,34 @@
 				</div>
 
 				<div class="form-group">
-						<label for="input-gys" class="col-sm-2 control-label">记录内容<span
+						<label for="input-gys" class="col-sm-2 control-label">实测密度<span
 							class="form-required">*</span></label>
 						<div class="col-md-6 col-sm-10">
 								<table class="table table-striped table-bordered table-hover dataTable no-footer" >
 										<thead>
 											<tr role="row">
 												<th></th>
-												<th>时间</th>
+												
 												<th class="sorting_disabled" rowspan="1" colspan="1">
-													灰分
+													次数
 												</th>
 												<th class="sorting_disabled" rowspan="1" colspan="1">
-													水分
+													密度
 												</th>
 												<th></th>
 											</tr>
 										</thead>
 										<tbody>
-												<foreach name="info['more']['time']" item="v" key="k">
+												<foreach name="info['more']['times']" item="v" key="k">
 											<tr role="row" class="odd order-list">
 												<td>
 													<a href="javascript:void(0);" onclick="add_list(this)"> [ + ] </a>
 												</td>
-												<td><input  required type="text"  class="form-control" value="{$v}"  name="more[time][]"
-													 /></td>
+											
 												<td>
-														<input type="text" required class="form-control" value="{$info['more']['huifen'][$k]}" name="more[huifen][]">	
+														<input type="text" required class="form-control" value="{$info['more']['times'][$k]}" name="more[times][]">	
 												</td>
-												<td><input type="text" required class="form-control" value="{$info['more']['shuifen'][$k]}" name="more[shuifen][]"></td>
+												<td><input type="text" required class="form-control" value="{$info['more']['midu'][$k]}" name="more[midu][]"></td>
 												<td>
 													<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> [ - ] </a>
 												</td>
@@ -71,6 +70,43 @@
 						</div>
 		
 					</div>	
+					<div class="form-group">
+							<label for="input-gys" class="col-sm-2 control-label">密度计显示<span
+								class="form-required">*</span></label>
+							<div class="col-md-6 col-sm-10">
+									<table class="table table-striped table-bordered table-hover dataTable no-footer" >
+											<thead>
+												<tr role="row">
+													<th></th>
+													<th>次数</th>
+													<th class="sorting_disabled" rowspan="1" colspan="1">
+														密度
+													</th>
+													
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+													<foreach name="info['more']['mdj_times']" item="v" key="k">
+												<tr role="row" class="odd order-list">
+													<td>
+														<a href="javascript:void(0);" onclick="add_list1(this)"> [ + ] </a>
+													</td>
+													
+													<td>
+															<input type="text" required class="form-control" value="{$info['more']['mdj_times'][$k]}" name="more[mdj_times][]">	
+													</td>
+													<td><input type="text" required class="form-control" value="{$info['more']['mdj_midu'][$k]}" name="more[mdj_midu][]"></td>
+													<td>
+														<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> [ - ] </a>
+													</td>
+												</tr>
+											</foreach>
+											</tbody>
+											</table>
+							</div>
+			
+						</div>	
 			
 					
 			<div class="form-group">
@@ -96,37 +132,38 @@
 												<td>
 													<a href="javascript:void(0);" onclick="add_list(this)"> [ + ] </a>
 												</td>
-												<td><input required type="text" class="form-control js-bootstrap-time"  name="more[time][]"
-													readonly /></td>
+												
 												<td>
-														<input type="text" required class="form-control" value="" name="more[huifen][]">	
+														<input type="text" required class="form-control" value="" name="more[times][]">	
 												</td>
-												<td><input type="text" required class="form-control" value="" name="more[shuifen][]"></td>
+												<td><input type="text" required class="form-control" value="" name="more[midu][]"></td>
 												<td>
 													<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> [ - ] </a>
 												</td>
 											</tr>`;
 				//$(obj).parent().parent().clone().appendTo($(obj).parent().parent().parent());
 				$(obj).parent().parent().parent().append(son);
-				var bootstrapDTimeInput = $("input.js-bootstrap-time");
-				if (bootstrapDTimeInput.length) {
-					Wind.css('bootstrapDatetimePicker');
-					Wind.use('bootstrapDatetimePicker', function () {
-						bootstrapDTimeInput.datetimepicker({
-							format: 'hh:ii',
-							language: 'zh-CN',
-							weekStart: 1,
-							todayBtn:  1,
-							autoclose: 1,
-							todayHighlight: 1,
-							startView: 1,
-							minView: 0,
-							maxView: 1,
-							forceParse: 0
-						
-						});
-					});
-				}
+			}
+			function add_list1(obj) {
+				// $(obj).parent().parent().hide();
+				//var clone = $(obj).parent().parent().clone();
+				//clone.find("input[name='goods-input'],input[name='nums']").val("");
+				var son = `<tr role="row" class="odd order-list">
+												<td>
+													<a href="javascript:void(0);" onclick="add_list(this)"> [ + ] </a>
+												</td>
+												
+												<td>
+														<input type="text" required class="form-control" value="" name="more[mdj_times][]">	
+												</td>
+												<td><input type="text" required class="form-control" value="" name="more[mdj_midu][]"></td>
+												<td>
+													<a class="delete" href="javascript:void(0)" onclick="del_list(this)"> [ - ] </a>
+												</td>
+											</tr>`;
+				//$(obj).parent().parent().clone().appendTo($(obj).parent().parent().parent());
+				$(obj).parent().parent().parent().append(son);
+				
 			}
 	
 			function del_list(obj) {

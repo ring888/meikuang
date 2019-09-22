@@ -3,70 +3,110 @@
 
 <body>
 	<div class="wrap">
-			<div class="panel panel-default">
-					<div class="panel-heading">记录详情</div>
-					<div class="panel-body">
-							
-		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="#">
-			<div class="form-group">
-					<label for="input-creater" class="col-sm-2 control-label">日期<span
-							class="form-required">*</span></label>
-					<div class="col-md-6 col-sm-10">
-							<input required type="text" class="form-control js-bootstrap-date" name="record_date" value="{:date('Y-m-d',$info['record_date'])}"
-					autocomplete="off" disabled="disabled" />
-					</div>
-				</div>
-			<div class="form-group">
-					<label for="input-user_login" class="col-sm-2 control-label">班次<span
-						class="form-required">*</span></label>
-					<div class="col-md-6 col-sm-10">
-						<select class="form-control" name="classes" id="input-classes" disabled="disabled">
-							<option value="0" <if condition="$info['classes'] eq 0">selected</if>>零点班</option>
-							<option value="8" <if condition="$info['classes'] eq 8">selected</if>>八点班</option>
-							<option value="4" <if condition="$info['classes'] eq 4">selected</if>>四点班</option>
-						</select>
-					</div>
-				</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">记录详情</div>
+			<div class="panel-body">
 
-				<div class="form-group">
-						<label for="input-gys" class="col-sm-2 control-label">记录内容<span
-							class="form-required">*</span></label>
+				<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="#">
+					<div class="form-group">
+						<label for="input-creater" class="col-sm-2 control-label">日期<span
+								class="form-required">*</span></label>
 						<div class="col-md-6 col-sm-10">
-								<table class="table table-striped table-bordered table-hover dataTable no-footer" >
-										<thead>
-											<tr role="row">
-												
-												<th>时间</th>
-												<th class="sorting_disabled" rowspan="1" colspan="1">
-													灰分
-												</th>
-												<th class="sorting_disabled" rowspan="1" colspan="1">
-													水分
-												</th>
-											
-											</tr>
-										</thead>
-										<tbody>
-												<foreach name="info['more']['time']" item="v" key="k">
-											<tr role="row" class="odd order-list">
-												
-												<td><input  required type="text"  class="form-control" value="{$v}"  name="more[time][]"
-													disabled="disabled" /></td>
-												<td>
-														<input type="text" required class="form-control" value="{$info['more']['huifen'][$k]}" name="more[huifen][]" disabled="disabled">	
-												</td>
-												<td><input type="text" required class="form-control" value="{$info['more']['shuifen'][$k]}" name="more[shuifen][]" disabled="disabled"></td>
-										
-											</tr>
-											</foreach>
-										</tbody>
-										</table>
+							<input required type="text" class="form-control js-bootstrap-date" name="record_date"
+								value="{:date('Y-m-d',$info['record_date'])}" autocomplete="off" disabled="disabled" />
 						</div>
-		
-					</div>	
-			
-		</form>
-		</div>
+					</div>
+					<div class="form-group">
+						<label for="input-user_login" class="col-sm-2 control-label">班次<span
+								class="form-required">*</span></label>
+						<div class="col-md-6 col-sm-10">
+							<select class="form-control" name="classes" id="input-classes" disabled="disabled">
+								<option value="0" <if condition="$info['classes'] eq 0">selected</if>>零点班</option>
+								<option value="8" <if condition="$info['classes'] eq 8">selected</if>>八点班</option>
+								<option value="4" <if condition="$info['classes'] eq 4">selected</if>>四点班</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="input-gys" class="col-sm-2 control-label">实测密度<span
+								class="form-required">*</span></label>
+						<div class="col-md-6 col-sm-10">
+							<table class="table table-striped table-bordered table-hover dataTable no-footer">
+								<thead>
+									<tr role="row">
+
+
+										<th class="sorting_disabled" rowspan="1" colspan="1">
+											次数
+										</th>
+										<th class="sorting_disabled" rowspan="1" colspan="1">
+											密度
+										</th>
+
+									</tr>
+								</thead>
+								<tbody>
+									<foreach name="info['more']['times']" item="v" key="k">
+										<tr role="row" class="odd order-list">
+
+
+											<td>
+												<input type="text" required class="form-control"
+													value="{$info['more']['times'][$k]}" name="more[times][]"
+													disabled="disabled">
+											</td>
+											<td><input type="text" required class="form-control"
+													value="{$info['more']['midu'][$k]}" name="more[midu][]"
+													disabled="disabled"></td>
+
+										</tr>
+									</foreach>
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+					<div class="form-group">
+						<label for="input-gys" class="col-sm-2 control-label">密度计显示<span
+								class="form-required">*</span></label>
+						<div class="col-md-6 col-sm-10">
+							<table class="table table-striped table-bordered table-hover dataTable no-footer">
+								<thead>
+									<tr role="row">
+
+										<th>次数</th>
+										<th class="sorting_disabled" rowspan="1" colspan="1">
+											密度
+										</th>
+
+
+									</tr>
+								</thead>
+								<tbody>
+									<foreach name="info['more']['mdj_times']" item="v" key="k">
+										<tr role="row" class="odd order-list">
+
+
+											<td>
+												<input type="text" required class="form-control"
+													value="{$info['more']['mdj_times'][$k]}" name="more[mdj_times][]"
+													disabled="disabled">
+											</td>
+											<td><input type="text" required class="form-control"
+													value="{$info['more']['mdj_midu'][$k]}" name="more[mdj_midu][]"
+													disabled="disabled"></td>
+
+										</tr>
+									</foreach>
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+
+				</form>
+			</div>
 		</div>
 
 	</div>

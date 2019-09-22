@@ -14,6 +14,7 @@ use cmf\controller\AdminBaseController;
 use think\Db;
 use think\db\Query;
 use app\admin\model\AnalysisMiduModel;
+
 class AnalysisMiduController extends AdminBaseController
 {
 
@@ -38,8 +39,8 @@ class AnalysisMiduController extends AdminBaseController
             ->alias('a')
             ->join('mk_user b', 'a.creater=b.id')
             ->where(function (Query $query) use ($param) {
-                
-                
+
+
                 $startTime = empty($param['start_time']) ? 0 : strtotime($param['start_time']);
                 $endTime   = empty($param['end_time']) ? 0 : strtotime($param['end_time']);
                 if (!empty($startTime)) {
@@ -74,7 +75,7 @@ class AnalysisMiduController extends AdminBaseController
      */
     public function add()
     {
-        
+
         return $this->fetch();
     }
 
@@ -98,14 +99,21 @@ class AnalysisMiduController extends AdminBaseController
             $data['create_time'] = time();
             $data['record_date'] = strtotime($data['record_date']);
             $data['creater'] = cmf_get_current_admin_id();
-            
+
             $data['more'] = json_encode($data['more']);
-            //print_r($data['more']['time']);die;
-            $linkModel = new AnalysisMiduModel();
-            
-            $linkModel->allowField(true)->save($data);
-            $this->success("操作成功", url("AnalysisMidu/index"));
-            
+            $result = Db::name('analysis_midu')
+                ->where('record_date', $data['record_date'])
+                ->where("classes", $data['classes'])
+                ->select();
+            if (count($result) > 0) {
+                $this->error("已存在该日该班次记录");
+            } else {
+                //print_r($data['more']['time']);die;
+                $linkModel = new AnalysisMiduModel();
+
+                $linkModel->allowField(true)->save($data);
+                $this->success("操作成功", url("AnalysisMidu/index"));
+            }
         }
     }
 
@@ -125,11 +133,11 @@ class AnalysisMiduController extends AdminBaseController
     public function edit()
     {
         $id    = $this->request->param('id', 0, 'intval');
-       
+
         $linkModel = new AnalysisMiduModel();
         $link      = $linkModel->get($id);
-        $link['more'] = json_decode($link['more'],true);    
-         $this->assign("info",$link);           
+        $link['more'] = json_decode($link['more'], true);
+        $this->assign("info", $link);
         return $this->fetch();
     }
 
@@ -153,8 +161,16 @@ class AnalysisMiduController extends AdminBaseController
             $linkModel = new AnalysisMiduModel();
             $data['record_date'] = strtotime($data['record_date']);
             $data['more'] = json_encode($data['more']);
+            $result = Db::name('analysis_midu')
+                ->where('record_date', $data['record_date'])
+                ->where("classes",$data['classes'])
+                ->where("id", "<>", $data['id'])
+                ->select();
+            if (count($result) > 0) {
+                $this->error("已存在该日该班次记录");
+            }
             $linkModel->allowField(true)->isUpdate(true)->save($data);
-    
+
             $this->success("保存成功！", url("AnalysisMidu/index"));
         }
     }
@@ -175,14 +191,14 @@ class AnalysisMiduController extends AdminBaseController
      */
     public function delete()
     {
-        
+
         $id = $this->request->param('id', 0, 'intval');
         AnalysisMiduModel::destroy($id);
         $this->success("删除成功！", url("AnalysisMidu/index"));
     }
 
 
-      /**
+    /**
      * 打印
      * @adminMenu(
      *     'name'   => '打印',
@@ -202,22 +218,22 @@ class AnalysisMiduController extends AdminBaseController
     public function prints()
     {
         $ids                 = $this->request->param('id');
-        $info = Db::name("warehouse_order")->where("id",$ids)->find();
-        $this->assign("info",$info);
+        $info = Db::name("warehouse_order")->where("id", $ids)->find();
+        $this->assign("info", $info);
 
         $order_goods = Db::table("mk_warehouse_order_goods")
-        ->alias("a")
-        ->join('mk_warehouse_goods b', 'a.goods_id=b.id')
-        ->join('mk_warehouse c', 'b.warehouse=c.id')
-        ->where("a.order_id",$ids)
-        ->field('a.*,b.goods_name,b.goods_no,b.danwei,c.wh_name')
-        ->order("a.id asc")
-        ->select();       
-        $this->assign("order_goods",$order_goods);           
+            ->alias("a")
+            ->join('mk_warehouse_goods b', 'a.goods_id=b.id')
+            ->join('mk_warehouse c', 'b.warehouse=c.id')
+            ->where("a.order_id", $ids)
+            ->field('a.*,b.goods_name,b.goods_no,b.danwei,c.wh_name')
+            ->order("a.id asc")
+            ->select();
+        $this->assign("order_goods", $order_goods);
         return $this->fetch();
     }
 
-          /**
+    /**
      * 查看
      * @adminMenu(
      *     'name'   => '查看',
@@ -237,13 +253,11 @@ class AnalysisMiduController extends AdminBaseController
     public function show()
     {
         $id    = $this->request->param('id', 0, 'intval');
-       
+
         $linkModel = new AnalysisMiduModel();
         $link      = $linkModel->get($id);
-        $link['more'] = json_decode($link['more'],true);    
-         $this->assign("info",$link);           
-        return $this->fetch();      
-
+        $link['more'] = json_decode($link['more'], true);
+        $this->assign("info", $link);
+        return $this->fetch();
     }
-
 }

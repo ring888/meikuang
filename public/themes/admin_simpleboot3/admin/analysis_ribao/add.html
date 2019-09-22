@@ -1,0 +1,42 @@
+<include file="public@header" />
+</head>
+
+<body>
+	<div class="wrap">
+			<div class="panel panel-default">
+					<div class="panel-heading">日报记录</div>
+					<div class="panel-body">
+							<ul class="nav nav-tabs">
+									<li ><a href="{:url('analysis_ribao/index')}">记录列表</a></li>
+									<li class="active"><a href="{:url('analysis_ribao/add')}">添加</a></li>
+								</ul>
+		<form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('analysis_ribao/addPost')}">
+			<div class="form-group">
+					<label for="input-creater" class="col-sm-2 control-label">日期<span
+							class="form-required">*</span></label>
+					<div class="col-md-6 col-sm-10">
+							<input required type="text" class="form-control js-bootstrap-date" name="record_date" value="{:date('Y-m-d',time())}"
+					autocomplete="off" readonly />
+					</div>
+				</div>
+			
+
+				
+					
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+						
+					<button id="tijiao"   type="submit"  class="btn btn-primary js-ajax-submit">新建日报</button>
+					<a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+				</div>
+			</div>
+		</form>
+		</div>
+		</div>
+
+	</div>
+	<script src="__STATIC__/js/admin.js"></script>
+	
+</body>
+
+</html>

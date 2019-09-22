@@ -96,17 +96,18 @@ class AnalysisChouchaController extends AdminBaseController
     {
         if ($this->request->isPost()) {
             $data      = $this->request->param();
+            $data['create_time'] = time();
+            $data['record_date'] = strtotime($data['record_date']);
+            $data['creater'] = cmf_get_current_admin_id();
+
+            $data['more'] = json_encode($data['more']);
             $result = Db::name('analysis_choucha')
-                ->whereTime('create_time', 'today')
+                ->where('record_date', $data['record_date'])
                 ->select();
             if (count($result) > 0) {
-                $this->success("今天已添加记录", url("AnalysisChoucha/index"));
+                $this->error("已存在该日记录");
             } else {
-                $data['create_time'] = time();
-                $data['record_date'] = strtotime($data['record_date']);
-                $data['creater'] = cmf_get_current_admin_id();
 
-                $data['more'] = json_encode($data['more']);
                 //print_r($data['more']['time']);die;
                 $linkModel = new AnalysisChouchaModel();
 

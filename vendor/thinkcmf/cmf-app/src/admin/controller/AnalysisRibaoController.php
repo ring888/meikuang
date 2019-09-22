@@ -10,24 +10,24 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\model\AnalysisPenchuiModel;
+use app\admin\model\AnalysisRibaoModel;
 use cmf\controller\AdminBaseController;
 use think\Db;
 use think\db\Query;
 
-class AnalysisPenchuiController extends AdminBaseController
+class AnalysisRibaoController extends AdminBaseController
 {
 
     /**
-     * 喷吹煤进仓快灰记录
+     * 日报记录
      * @adminMenu(
-     *     'name'   => '喷吹煤进仓快灰记录',
+     *     'name'   => '日报记录',
      *     'parent' => 'admin/Analysis/record',
      *     'display'=> true,
      *     'hasView'=> true,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '喷吹煤进仓快灰记录',
+     *     'remark' => '日报记录',
      *     'param'  => ''
      * )
      * @throws \think\exception\DbException
@@ -35,7 +35,7 @@ class AnalysisPenchuiController extends AdminBaseController
     public function index()
     {
         $param = $this->request->param();
-        $goods = Db::table('mk_analysis_penchui')
+        $goods = Db::table('mk_analysis_ribao')
             ->alias('a')
             ->join('mk_user b', 'a.creater=b.id')
             ->where(function (Query $query) use ($param) {
@@ -100,20 +100,19 @@ class AnalysisPenchuiController extends AdminBaseController
                 $data['record_date'] = strtotime($data['record_date']);
                 $data['creater'] = cmf_get_current_admin_id();
 
-                $data['more'] = json_encode($data['more']);
-            $result = Db::name('analysis_penchui')
+               
+            $result = Db::name('analysis_ribao')
                 ->where('record_date', $data['record_date'])
-                ->where("classes", $data['classes'])
                 ->select();
             if (count($result) > 0) {
-                $this->error("已存在该日该班次记录");
+                $this->error("已存在该日记录");
             } else {
                 
                 //print_r($data['more']['time']);die;
-                $linkModel = new AnalysisPenchuiModel();
+                $linkModel = new AnalysisRibaoModel();
 
                 $linkModel->allowField(true)->save($data);
-                $this->success("操作成功", url("AnalysisPenchui/index"));
+                $this->success("操作成功", url("AnalysisRibao/index"));
             }
         }
     }
@@ -135,9 +134,14 @@ class AnalysisPenchuiController extends AdminBaseController
     {
         $id    = $this->request->param('id', 0, 'intval');
         
-        $linkModel = new AnalysisPenchuiModel();
+        $linkModel = new AnalysisRibaoModel();
         $link      = $linkModel->get($id);
-        $link['more'] = json_decode($link['more'], true);
+        $link['ground_more'] = json_decode($link['ground_more'], true);
+        $link['coal_more'] = json_decode($link['coal_more'], true);
+        $link['under_more'] = json_decode($link['under_more'], true);
+        $link['four_classes_more'] = json_decode($link['four_classes_more'], true);
+        $link['zero_classes_more'] = json_decode($link['zero_classes_more'], true);
+        $link['eight_classes_more'] = json_decode($link['eight_classes_more'], true);
         $this->assign("info", $link);
         return $this->fetch();
     }
@@ -159,20 +163,24 @@ class AnalysisPenchuiController extends AdminBaseController
     {
         if ($this->request->isPost()) {
             $data      = $this->request->param();
-            $linkModel = new AnalysisPenchuiModel();
+            $linkModel = new AnalysisRibaoModel();
             $data['record_date'] = strtotime($data['record_date']);
-            $data['more'] = json_encode($data['more']);
-            $result = Db::name('analysis_penchui')
+            $data['ground_more'] = json_encode($data['ground_more']);
+            $data['coal_more'] = json_encode($data['coal_more']);
+            $data['under_more'] = json_encode($data['under_more']);
+            $data['four_classes_more'] = json_encode($data['four_classes_more']);
+            $data['zero_classes_more'] = json_encode($data['zero_classes_more']);
+            $data['eight_classes_more'] = json_encode($data['eight_classes_more']);
+            $result = Db::name('analysis_ribao')
                 ->where('record_date', $data['record_date'])
-                ->where("classes",$data['classes'])
                 ->where("id", "<>", $data['id'])
                 ->select();
             if (count($result) > 0) {
-                $this->error("已存在该日该班次记录");
+                $this->error("已存在该日记录");
             }
             $linkModel->allowField(true)->isUpdate(true)->save($data);
             
-            $this->success("保存成功！", url("AnalysisPenchui/index"));
+            $this->success("保存成功！", url("AnalysisRibao/index"));
         }
     }
 
@@ -194,8 +202,8 @@ class AnalysisPenchuiController extends AdminBaseController
     {
 
         $id = $this->request->param('id', 0, 'intval');
-        AnalysisPenchuiModel::destroy($id);
-        $this->success("删除成功！", url("AnalysisPenchui/index"));
+        AnalysisRibaoModel::destroy($id);
+        $this->success("删除成功！", url("AnalysisRibao/index"));
     }
 
 
@@ -218,19 +226,37 @@ class AnalysisPenchuiController extends AdminBaseController
      */
     public function prints()
     {
-        $ids                 = $this->request->param('id');
-        $info = Db::name("warehouse_order")->where("id", $ids)->find();
-        $this->assign("info", $info);
+        $id    = $this->request->param('id', 0, 'intval');
+        
+        $linkModel = new AnalysisRibaoModel();
+        $link      = $linkModel->get($id);
+        $link['ground_more'] = json_decode($link['ground_more'], true);
+        $this->assign("ground_more_count",count($link['ground_more']['coal_name']));
 
-        $order_goods = Db::table("mk_warehouse_order_goods")
-            ->alias("a")
-            ->join('mk_warehouse_goods b', 'a.goods_id=b.id')
-            ->join('mk_warehouse c', 'b.warehouse=c.id')
-            ->where("a.order_id", $ids)
-            ->field('a.*,b.goods_name,b.goods_no,b.danwei,c.wh_name')
-            ->order("a.id asc")
-            ->select();
-        $this->assign("order_goods", $order_goods);
+        $link['coal_more'] = json_decode($link['coal_more'], true);
+        $this->assign("coal_more_count",count($link['coal_more']['coal_name']));
+
+        $link['under_more'] = json_decode($link['under_more'], true);
+        $this->assign("under_more_count",count($link['under_more']['coal_name']));
+
+        $link['four_classes_more'] = json_decode($link['four_classes_more'], true);
+        $four_count = count($link['four_classes_more']['coal_name']);
+        $this->assign("four_classes_more_count",$four_count);
+
+        $link['zero_classes_more'] = json_decode($link['zero_classes_more'], true);
+        $zero_count = count($link['zero_classes_more']['coal_name']);
+        $this->assign("zero_classes_more_count",$zero_count);
+
+        $link['eight_classes_more'] = json_decode($link['eight_classes_more'], true);
+        $eight_count = count($link['eight_classes_more']['coal_name']);
+        $this->assign("eight_classes_more_count",$eight_count);
+
+        $total = count($link['ground_more']['coal_name']) + count($link['coal_more']['coal_name']) + count($link['under_more']['coal_name']);
+
+        $max = max($four_count,$zero_count,$eight_count);
+        $this->assign("max",$max==0?1:$max);
+        $this->assign("total",$total);
+        $this->assign("info", $link);
         return $this->fetch();
     }
 
@@ -254,10 +280,35 @@ class AnalysisPenchuiController extends AdminBaseController
     public function show()
     {
         $id    = $this->request->param('id', 0, 'intval');
-
-        $linkModel = new AnalysisPenchuiModel();
+        
+        $linkModel = new AnalysisRibaoModel();
         $link      = $linkModel->get($id);
-        $link['more'] = json_decode($link['more'], true);
+        $link['ground_more'] = json_decode($link['ground_more'], true);
+        $this->assign("ground_more_count",count($link['ground_more']['coal_name']));
+
+        $link['coal_more'] = json_decode($link['coal_more'], true);
+        $this->assign("coal_more_count",count($link['coal_more']['coal_name']));
+
+        $link['under_more'] = json_decode($link['under_more'], true);
+        $this->assign("under_more_count",count($link['under_more']['coal_name']));
+
+        $link['four_classes_more'] = json_decode($link['four_classes_more'], true);
+        $four_count = count($link['four_classes_more']['coal_name']);
+        $this->assign("four_classes_more_count",$four_count);
+
+        $link['zero_classes_more'] = json_decode($link['zero_classes_more'], true);
+        $zero_count = count($link['zero_classes_more']['coal_name']);
+        $this->assign("zero_classes_more_count",$zero_count);
+
+        $link['eight_classes_more'] = json_decode($link['eight_classes_more'], true);
+        $eight_count = count($link['eight_classes_more']['coal_name']);
+        $this->assign("eight_classes_more_count",$eight_count);
+
+        $total = count($link['ground_more']['coal_name']) + count($link['coal_more']['coal_name']) + count($link['under_more']['coal_name']);
+
+        $max = max($four_count,$zero_count,$eight_count);
+        $this->assign("max",$max==0?1:$max);
+        $this->assign("total",$total);
         $this->assign("info", $link);
         return $this->fetch();
     }
