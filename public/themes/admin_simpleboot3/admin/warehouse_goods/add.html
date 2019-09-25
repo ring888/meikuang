@@ -28,6 +28,17 @@
 				</div>
 			</div>
 			<div class="form-group">
+					<label for="input-warehouse" class="col-sm-2 control-label">物品分类<span
+						class="form-required">*</span></label>
+					<div class="col-md-6 col-sm-10">
+							<input class="form-control" type="text" style="width:400px;" required value=""
+							placeholder="请选择分类" onclick="doSelectCategory();" id="js-categories-name-input"
+							readonly/>
+					 <input class="form-control" type="hidden" value="" name="goods_category"
+							id="js-categories-id-input"/>
+					</div>
+				</div>
+			<div class="form-group">
 				<label for="input-goods_type" class="col-sm-2 control-label"><span
 						class="form-required">*</span>规格</label>
 				<div class="col-md-6 col-sm-10">
@@ -75,6 +86,32 @@
 			</div>
 		</form>
 	</div>
+	<script>
+
+
+			function doSelectCategory() {
+			var selectedCategoriesId = $('#js-categories-id-input').val();
+			openIframeLayer("{:url('portal/AdminGoodsCategory/select')}?ids=" + selectedCategoriesId, '请选择分类', {
+				area: ['900px', '500px'],
+				btn: ['确定', '取消'],
+				yes: function (index, layero) {
+					//do something
+	
+					var iframeWin          = window[layero.find('iframe')[0]['name']];
+					var selectedCategories = iframeWin.confirm();
+					
+					if (selectedCategories.selectedCategoriesId.length == 0) {
+						layer.msg('请选择分类');
+						return;
+					}
+					$('#js-categories-id-input').val(selectedCategories.selectedCategoriesId);
+					$('#js-categories-name-input').val(selectedCategories.selectedCategoriesName);
+					//console.log(layer.getFrameIndex(index));
+					layer.close(index); //如果设定了yes回调，需进行手工关闭
+				}
+			});
+		}
+		</script>
 	<script src="__STATIC__/js/admin.js"></script>
 </body>
 

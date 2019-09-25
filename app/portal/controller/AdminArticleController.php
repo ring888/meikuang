@@ -492,7 +492,7 @@ class AdminArticleController extends AdminBaseController
         $categoryId = $this->request->param('category', 0, 'intval');
 
         $postService = new PostService();
-        $data        = $postService->adminArticleList($param);
+        $data        = $postService->adminFrontArticleList($param);
 
         $data->appends($param);
 

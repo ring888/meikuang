@@ -38,6 +38,7 @@ class WarehouseGoodsController extends AdminBaseController
         $goods = Db::table('mk_warehouse_goods')
             ->alias('a')
             ->join('mk_warehouse b', 'a.warehouse=b.id')
+            ->join('mk_portal_goods_category c', 'a.goods_category=c.id')
             ->where(function (Query $query) {
                 $param = $this->request->param();
                 if (!empty($param['keyword'])) {
@@ -49,7 +50,7 @@ class WarehouseGoodsController extends AdminBaseController
                     $query->where('a.warehouse', $categoryId);
                 }
             })
-            ->field('a.*,b.wh_name')
+            ->field('a.*,b.wh_name,c.name as goods_category_name')
             ->order("a.id DESC")
             ->paginate(10);
         $warehouse = Db::name('Warehouse')->select();
@@ -136,7 +137,14 @@ class WarehouseGoodsController extends AdminBaseController
         $roles = Db::name('warehouse')->order("id asc")->select();
         $this->assign("warehouseModel", $roles);
 
-        $warehouse_goods = DB::name('warehouse_goods')->where("id", $id)->find();
+        $warehouse_goods = Db::table("mk_warehouse_goods")
+                        ->alias("a")
+                        ->join('mk_portal_goods_category b', 'a.goods_category=b.id')
+                        ->where("a.id",$id)
+                        ->field('a.*,b.name')
+                        ->order("a.id asc")
+                        ->find();
+               
         $this->assign($warehouse_goods);
         return $this->fetch();
     }

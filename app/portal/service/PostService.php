@@ -27,6 +27,17 @@ class PostService
     }
 
     /**
+     * 前台文章查询
+     * @param $filter
+     * @return \think\Paginator
+     * @throws \think\exception\DbException
+     */
+    public function adminFrontArticleList($filter)
+    {
+        return $this->adminFrontPostList($filter);
+    }
+
+    /**
      * 页面文章列表
      * @param $filter
      * @return \think\Paginator
@@ -67,6 +78,75 @@ class PostService
             ->join($join)
             ->where('a.create_time', '>=', 0)
             ->where('a.delete_time', 0)
+            ->where(function (Query $query) use ($filter, $isPage) {
+
+                $category = empty($filter['category']) ? 0 : $filter['category'];
+                if (!empty($category)) {
+                    
+                    if(is_array($category)) {
+
+                        //$where['b.category_id'] = ['in', $category];
+                        $query->where('b.category_id','in', $category);
+                    }
+        
+                    else{
+        
+                        $query->where('b.category_id', $category);
+        
+                    }
+                }
+
+                $startTime = empty($filter['start_time']) ? 0 : strtotime($filter['start_time']);
+                $endTime   = empty($filter['end_time']) ? 0 : strtotime($filter['end_time']);
+                if (!empty($startTime)) {
+                    $query->where('a.published_time', '>=', $startTime);
+                }
+                if (!empty($endTime)) {
+                    $query->where('a.published_time', '<=', $endTime);
+                }
+
+                $keyword = empty($filter['keyword']) ? '' : $filter['keyword'];
+                if (!empty($keyword)) {
+                    $query->where('a.post_title', 'like', "%$keyword%");
+                }
+
+                if ($isPage) {
+                    $query->where('a.post_type', 2);
+                } else {
+                    $query->where('a.post_type', 1);
+                }
+            })
+            ->order('update_time', 'DESC')
+            ->paginate(10);
+
+        return $articles;
+
+    }
+
+    public function adminFrontPostList($filter, $isPage = false)
+    {
+
+        $join = [
+            ['__USER__ u', 'a.user_id = u.id']
+        ];
+
+        $field = 'a.*,u.user_login,u.user_nickname,u.user_email';
+
+        //$category = empty($filter['category']) ? 0 : intval($filter['category']);
+        $category = empty($filter['category']) ? 0 : $filter['category'];
+        if (!empty($category)) {
+            array_push($join, [
+                '__PORTAL_CATEGORY_POST__ b', 'a.id = b.post_id'
+            ]);
+            $field = 'a.*,b.id AS post_category_id,b.list_order,b.category_id,u.user_login,u.user_nickname,u.user_email';
+        }
+
+        $portalPostModel = new PortalPostModel();
+        $articles        = $portalPostModel->alias('a')->field($field)
+            ->join($join)
+            ->where('a.create_time', '>=', 0)
+            ->where('a.delete_time', 0)
+            ->where('a.post_status',1)
             ->where(function (Query $query) use ($filter, $isPage) {
 
                 $category = empty($filter['category']) ? 0 : $filter['category'];

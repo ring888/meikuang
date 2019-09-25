@@ -212,6 +212,12 @@ h1{ line-height:56px; font-family:"微软雅黑", "宋体"; font-size:38px; text
                         <if condition="$article['more']['video'] neq '' ">
                                 <a href="/upload/{$article.more.video}" target="_blank">视频</a>
                                 </if>
+                                <present name="article['more']['files']">
+                                        <if condition="$article['more']['files'] neq '' ">
+                                                <foreach name="$article['more']['files']" item="vo"> <a href="/upload/{$vo.url}" target="_blank">{$vo.name}</a></foreach>
+                                            
+                                            </if>
+                                            </present>
             </div>
       <div class="editor"><span></span>编辑：{$article.user.user_nickname} </div>
       <php>

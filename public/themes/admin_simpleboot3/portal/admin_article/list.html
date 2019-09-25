@@ -3,7 +3,11 @@
 </head>
 <body>
 <div class="wrap js-check-wrap">
+        <div class="panel panel-default">
+                <div class="panel-heading">文章列表</div>
+                <div class="panel-body">
     <ul class="nav nav-tabs">
+            <li><a href="{:url('admin/main/index')}">首页</a></li>
             <portal:categories item="vo">
                 <if condition="$categoryModel['name'] eq $vo['name']">
                     <li class="active"><a href="javascript:;">{$vo.name}</a></li>
@@ -52,6 +56,8 @@
         </table>
         <ul class="pagination">{$page|default=''}</ul>
     </form>
+    </div>
+    </div>
 </div>
 <script src="__STATIC__/js/admin.js"></script>
 <script>
